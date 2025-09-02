@@ -4,7 +4,7 @@ import TasksIcon from '../assets/icons/tasks.svg?react'
 
 export default function Sidebar() {
   return (
-    <div className="h-dvh w-64 bg-white">
+    <aside className="h-dvh w-64 bg-white">
       <div className="space-y-4 px-8 py-6">
         <h1 className="text-xl font-semibold text-[#00ADB5]">Task Manager</h1>
         <p>
@@ -25,6 +25,6 @@ export default function Sidebar() {
           Minhas tarefas
         </SidebarButton>
       </div>
-    </div>
+    </aside>
   )
 }
