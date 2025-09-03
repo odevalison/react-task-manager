@@ -1,5 +1,5 @@
-import SidebarButton from './SidebarButton'
 import { HomeIcon, TasksIcon } from '../assets/icons'
+import SidebarButton from './SidebarButton'
 
 export default function Sidebar() {
   return (

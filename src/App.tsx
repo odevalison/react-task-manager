@@ -1,4 +1,5 @@
 import { Toaster } from 'sonner'
+
 import Sidebar from './components/Siderbar'
 import Tasks from './components/Tasks'
 
