@@ -38,6 +38,13 @@ export default function Tasks() {
     setTasks(newTasks)
   }
 
+  const handleTaskDeleteClick = (taskId: number) => {
+    const tasksWithoutDeletedTask: Task[] = tasks.filter(
+      (task) => task.id !== taskId
+    )
+    setTasks(tasksWithoutDeletedTask)
+  }
+
   return (
     <main className="w-full space-y-6 px-8 py-16">
       <div className="flex justify-between">
@@ -64,6 +71,7 @@ export default function Tasks() {
 
           {morningTasks.map((task) => (
             <TaskItem
+              handleDeleteClick={handleTaskDeleteClick}
               handleCheckboxClick={handleTaskCheckboxClick}
               key={task.id}
               task={task}
@@ -76,6 +84,7 @@ export default function Tasks() {
 
           {afternoonTasks.map((task) => (
             <TaskItem
+              handleDeleteClick={handleTaskDeleteClick}
               handleCheckboxClick={handleTaskCheckboxClick}
               key={task.id}
               task={task}
@@ -88,6 +97,7 @@ export default function Tasks() {
 
           {eveningTasks.map((task) => (
             <TaskItem
+              handleDeleteClick={handleTaskDeleteClick}
               handleCheckboxClick={handleTaskCheckboxClick}
               key={task.id}
               task={task}

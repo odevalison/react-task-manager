@@ -1,14 +1,21 @@
 import CheckIcon from '../assets/icons/check.svg?react'
 import DetailsIcon from '../assets/icons/details.svg?react'
 import LoaderIcon from '../assets/icons/loader.svg?react'
+import TrashIcon from '../assets/icons/trash.svg?react'
 import { Task } from '../types/tasks'
+import Button from './Button'
 
 interface TaskItemProps {
   task: Task
   handleCheckboxClick: (taskId: number) => void
+  handleDeleteClick: (taskId: number) => void
 }
 
-export default function TaskItem({ task, handleCheckboxClick }: TaskItemProps) {
+export default function TaskItem({
+  task,
+  handleCheckboxClick,
+  handleDeleteClick,
+}: TaskItemProps) {
   const getClassesByStatus = () => {
     switch (task.status) {
       case 'complete':
@@ -39,12 +46,19 @@ export default function TaskItem({ task, handleCheckboxClick }: TaskItemProps) {
             <LoaderIcon className="animate-spin" />
           )}
         </label>
+
         {task.title}
       </div>
 
-      <a href="#" className="transition hover:opacity-75">
-        <DetailsIcon />
-      </a>
+      <div className="flex items-center gap-2">
+        <Button variant="ghost" onClick={() => handleDeleteClick(task.id)}>
+          <TrashIcon className="text-[#9A9C9F]" />
+        </Button>
+
+        <a href="#" className="transition hover:opacity-75">
+          <DetailsIcon />
+        </a>
+      </div>
     </div>
   )
 }
