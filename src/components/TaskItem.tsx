@@ -1,7 +1,4 @@
-import CheckIcon from '../assets/icons/check.svg?react'
-import DetailsIcon from '../assets/icons/details.svg?react'
-import LoaderIcon from '../assets/icons/loader.svg?react'
-import TrashIcon from '../assets/icons/trash.svg?react'
+import { CheckIcon, DetailsIcon, LoaderIcon, TrashIcon } from '../assets/icons'
 import { Task } from '../types/tasks'
 import Button from './Button'
 
