@@ -9,6 +9,7 @@ import { Task } from '../types/tasks'
 import Button from './Button'
 import TaskItem from './TaskItem'
 import TasksSeparator from './TasksSeparator'
+import { toast } from 'sonner'
 
 export default function Tasks() {
   const [tasks, setTasks] = useState<Task[]>(TASKS as Task[])
@@ -25,10 +26,13 @@ export default function Tasks() {
 
       switch (task.status) {
         case 'not_started':
+          toast.success('Tarefa iniciada com sucesso!')
           return { ...task, status: 'in_progress' }
         case 'in_progress':
+          toast.success('Tarefa concluída com sucesso!')
           return { ...task, status: 'complete' }
         case 'complete':
+          toast.success('Tarefa reiniciada com sucesso!')
           return { ...task, status: 'not_started' }
         default:
           return task
@@ -43,6 +47,8 @@ export default function Tasks() {
       (task) => task.id !== taskId
     )
     setTasks(tasksWithoutDeletedTask)
+
+    toast.success('Tarefa deletada com sucesso!')
   }
 
   return (
