@@ -10,9 +10,12 @@ export default function SidebarButton({
   variant,
 }: SidebarButtonProps) {
   const getVariantClasses = () => {
-    return variant === 'default'
-      ? 'text-[#35383E]'
-      : 'bg-[#E6F7F8] text-[#00ADB5]'
+    switch (variant) {
+      case 'default':
+        return 'text-[#35383E]'
+      case 'selected':
+        return 'bg-[#E6F7F8] text-[#00ADB5]'
+    }
   }
 
   return (
