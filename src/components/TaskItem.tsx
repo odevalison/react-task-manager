@@ -1,13 +1,14 @@
 import CheckIcon from '../assets/icons/check.svg?react'
+import DetailsIcon from '../assets/icons/details.svg?react'
 import LoaderIcon from '../assets/icons/loader.svg?react'
 import { Task } from '../types/tasks'
-import DetailsIcon from '../assets/icons/details.svg?react'
 
 interface TaskItemProps {
   task: Task
+  handleCheckboxClick: (taskId: number) => void
 }
 
-export default function TaskItem({ task }: TaskItemProps) {
+export default function TaskItem({ task, handleCheckboxClick }: TaskItemProps) {
   const getClassesByStatus = () => {
     switch (task.status) {
       case 'complete':
@@ -21,7 +22,7 @@ export default function TaskItem({ task }: TaskItemProps) {
 
   return (
     <div
-      className={`flex items-center justify-between rounded-lg bg-opacity-10 px-4 py-3 ${getClassesByStatus()}`}
+      className={`flex items-center justify-between rounded-lg bg-opacity-10 px-4 py-3 transition ${getClassesByStatus()}`}
     >
       <div className="flex items-center gap-3">
         <label
@@ -31,6 +32,7 @@ export default function TaskItem({ task }: TaskItemProps) {
             type="checkbox"
             checked={task.status === 'complete'}
             className="absolute size-full cursor-pointer opacity-0"
+            onChange={() => handleCheckboxClick(task.id)}
           />
           {task.status === 'complete' && <CheckIcon />}
           {task.status === 'in_progress' && (

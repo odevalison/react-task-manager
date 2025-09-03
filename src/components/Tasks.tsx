@@ -4,18 +4,39 @@ import CloudSunIcon from '../assets/icons/cloud-sun.svg?react'
 import MoonIcon from '../assets/icons/moon.svg?react'
 import SunIcon from '../assets/icons/sun.svg?react'
 import TrashIcon from '../assets/icons/trash.svg?react'
-import Button from './Button'
-import TasksSeparator from './TasksSeparator'
 import TASKS from '../constants/tasks'
 import { Task } from '../types/tasks'
+import Button from './Button'
 import TaskItem from './TaskItem'
+import TasksSeparator from './TasksSeparator'
 
 export default function Tasks() {
-  const [tasks] = useState<Task[]>(TASKS as Task[])
+  const [tasks, setTasks] = useState<Task[]>(TASKS as Task[])
 
   const morningTasks = tasks.filter((task) => task.time === 'morning')
   const afternoonTasks = tasks.filter((task) => task.time === 'afternoon')
   const eveningTasks = tasks.filter((task) => task.time === 'evening')
+
+  const handleTaskCheckboxClick = (taskId: number) => {
+    const newTasks: Task[] = tasks.map((task) => {
+      if (task.id !== taskId) {
+        return task
+      }
+
+      switch (task.status) {
+        case 'not_started':
+          return { ...task, status: 'in_progress' }
+        case 'in_progress':
+          return { ...task, status: 'complete' }
+        case 'complete':
+          return { ...task, status: 'not_started' }
+        default:
+          return task
+      }
+    })
+
+    setTasks(newTasks)
+  }
 
   return (
     <main className="w-full space-y-6 px-8 py-16">
@@ -42,7 +63,11 @@ export default function Tasks() {
           <TasksSeparator text="Manhã" icon={<SunIcon />} />
 
           {morningTasks.map((task) => (
-            <TaskItem key={task.id} task={task} />
+            <TaskItem
+              handleCheckboxClick={handleTaskCheckboxClick}
+              key={task.id}
+              task={task}
+            />
           ))}
         </div>
 
@@ -50,7 +75,11 @@ export default function Tasks() {
           <TasksSeparator text="Tarde" icon={<CloudSunIcon />} />
 
           {afternoonTasks.map((task) => (
-            <TaskItem key={task.id} task={task} />
+            <TaskItem
+              handleCheckboxClick={handleTaskCheckboxClick}
+              key={task.id}
+              task={task}
+            />
           ))}
         </div>
 
@@ -58,7 +87,11 @@ export default function Tasks() {
           <TasksSeparator text="Noite" icon={<MoonIcon />} />
 
           {eveningTasks.map((task) => (
-            <TaskItem key={task.id} task={task} />
+            <TaskItem
+              handleCheckboxClick={handleTaskCheckboxClick}
+              key={task.id}
+              task={task}
+            />
           ))}
         </div>
       </div>
