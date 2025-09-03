@@ -1,13 +1,13 @@
 type SidebarButtonVariants = 'default' | 'selected'
 
 interface SidebarButtonProps {
-  variant: SidebarButtonVariants
+  variant?: SidebarButtonVariants
   children: React.ReactNode
 }
 
 export default function SidebarButton({
   children,
-  variant,
+  variant = 'default',
 }: SidebarButtonProps) {
   const getVariantClasses = () => {
     switch (variant) {
