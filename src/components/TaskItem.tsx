@@ -14,13 +14,12 @@ export default function TaskItem({
   handleDeleteClick,
 }: TaskItemProps) {
   const getClassesByStatus = () => {
-    switch (task.status) {
-      case 'complete':
-        return 'bg-[#00ADB5] text-sm font-medium text-[#002C2E]'
-      case 'not_started':
-        return 'bg-[#35383E] text-sm bg-opacity-10 font-medium text-[#35383E]'
-      case 'in_progress':
-        return 'bg-[#FFAA04] text-sm font-medium text-black/60'
+    if (task.status === 'complete') {
+      return 'bg-[#00ADB5] text-sm font-medium text-[#002C2E]'
+    } else if (task.status === 'not_started') {
+      return 'bg-[#35383E] text-sm bg-opacity-10 font-medium text-[#35383E]'
+    } else if (task.status === 'in_progress') {
+      return 'bg-[#FFAA04] text-sm font-medium text-black/60'
     }
   }
 

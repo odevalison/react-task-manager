@@ -16,22 +16,20 @@ export default function Button({
   ...props
 }: ButtonProps) {
   const getVariantClasses = () => {
-    switch (variant) {
-      case 'primary':
-        return 'bg-[#00ADB5] text-white'
-      case 'ghost':
-        return 'bg-transparent text-[#818181]'
-      case 'secondary':
-        return 'bg-[#EEEEEE] text-[#35383E]'
+    if (variant === 'primary') {
+      return 'bg-[#00ADB5] text-white'
+    } else if (variant === 'ghost') {
+      return 'bg-transparent text-[#818181]'
+    } else if (variant === 'secondary') {
+      return 'bg-[#EEEEEE] text-[#35383E]'
     }
   }
 
   const getSizeClasses = () => {
-    switch (size) {
-      case 'sm':
-        return 'py-1 text-xs'
-      case 'lg':
-        return 'text-sm py-2'
+    if (size === 'sm') {
+      return 'py-1 text-xs'
+    } else if (size === 'lg') {
+      return 'text-sm py-2'
     }
   }
 

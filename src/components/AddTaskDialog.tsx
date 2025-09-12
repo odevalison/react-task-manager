@@ -1,9 +1,11 @@
 import './AddTaskDialog.css'
 
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { CSSTransition } from 'react-transition-group'
+import { v4 as uuidv4 } from 'uuid'
 
+import { Task, TaskTime } from '../types/tasks'
 import Button from './Button'
 import Input from './Input'
 import TimeSelect from './TimeSelect'
@@ -11,13 +13,30 @@ import TimeSelect from './TimeSelect'
 interface AddTaskDialogProps {
   isOpen: boolean
   handleClose: () => void
+  handleAdd: (task: Task) => void
 }
 
 export default function AddTaskDialog({
   isOpen,
   handleClose,
+  handleAdd,
 }: AddTaskDialogProps) {
+  const [time, setTime] = useState<TaskTime>('morning')
+  const [title, setTitle] = useState<string>('')
+  const [description, setDescription] = useState<string>('')
+
   const nodeRef = useRef<HTMLDivElement>(null)
+
+  const handleSaveClick = () => {
+    handleAdd({
+      title,
+      description,
+      time,
+      id: uuidv4(),
+      status: 'not_started',
+    })
+    handleClose()
+  }
 
   return (
     <CSSTransition
@@ -48,14 +67,21 @@ export default function AddTaskDialog({
                   label="Título"
                   id="title"
                   placeholder="Título da tarefa"
+                  value={title}
+                  onChange={(event) => setTitle(event.target.value)}
                 />
 
-                <TimeSelect />
+                <TimeSelect
+                  value={time}
+                  onChange={(event) => setTime(event.target.value as TaskTime)}
+                />
 
                 <Input
                   label="Descrição"
                   id="description"
                   placeholder="Descreva a tarefa"
+                  value={description}
+                  onChange={(event) => setDescription(event.target.value)}
                 />
 
                 <div className="flex gap-3 *:flex-1">
@@ -66,7 +92,9 @@ export default function AddTaskDialog({
                   >
                     Cancelar
                   </Button>
-                  <Button size="lg">Salvar</Button>
+                  <Button size="lg" onClick={handleSaveClick}>
+                    Salvar
+                  </Button>
                 </div>
               </div>
             </div>

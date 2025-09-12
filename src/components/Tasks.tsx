@@ -29,19 +29,18 @@ export default function Tasks() {
         return task
       }
 
-      switch (task.status) {
-        case 'not_started':
-          toast.success('Tarefa iniciada com sucesso!')
-          return { ...task, status: 'in_progress' }
-        case 'in_progress':
-          toast.success('Tarefa concluída com sucesso!')
-          return { ...task, status: 'complete' }
-        case 'complete':
-          toast.success('Tarefa reiniciada com sucesso!')
-          return { ...task, status: 'not_started' }
-        default:
-          return task
+      if (task.status === 'not_started') {
+        toast.success('Tarefa iniciada com sucesso!')
+        return { ...task, status: 'in_progress' }
+      } else if (task.status === 'in_progress') {
+        toast.success('Tarefa concluída com sucesso!')
+        return { ...task, status: 'complete' }
+      } else if (task.status === 'complete') {
+        toast.success('Tarefa reiniciada com sucesso!')
+        return { ...task, status: 'not_started' }
       }
+
+      return task
     })
 
     setTasks(newTasks)
@@ -54,6 +53,11 @@ export default function Tasks() {
     setTasks(tasksWithoutDeletedTask)
 
     toast.success('Tarefa deletada com sucesso!')
+  }
+
+  const handleAddTask = (newTask: Task) => {
+    setTasks((prevTasks) => [...prevTasks, newTask])
+    toast.success('Tarefa adicionada com sucesso!')
   }
 
   return (
@@ -77,6 +81,7 @@ export default function Tasks() {
 
           <AddTaskDialog
             handleClose={() => setAddTaskDialogIsOpen(false)}
+            handleAdd={handleAddTask}
             isOpen={addTaskDialogIsOpen}
           />
         </div>
