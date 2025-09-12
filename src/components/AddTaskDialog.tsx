@@ -36,6 +36,9 @@ export default function AddTaskDialog({
   const nodeRef = useRef<HTMLDivElement>(null)
 
   const handleSaveClick = () => {
+    if (!title.trim() || !description.trim() || !time.trim()) {
+      return alert('preencha todos os campos!')
+    }
     handleAdd({
       title,
       description,
@@ -58,9 +61,9 @@ export default function AddTaskDialog({
         {createPortal(
           <div
             ref={nodeRef}
-            className="fixed bottom-0 left-0 top-0 flex h-screen w-screen items-center justify-center bg-black/10 backdrop-blur"
+            className="fixed bottom-0 left-0 top-0 flex h-screen w-screen items-center justify-center backdrop-blur"
           >
-            <div className="w-[336px] max-w-[400px] space-y-4 rounded-xl bg-white p-5 text-center shadow">
+            <div className="min-w-96 max-w-full space-y-4 rounded-xl bg-white p-5 text-center shadow">
               <div className="space-y-1">
                 <h2 className="text-xl font-semibold text-[#35383E]">
                   Nova Tarefa
