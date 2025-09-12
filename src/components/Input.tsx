@@ -1,18 +1,15 @@
 import { InputHTMLAttributes } from 'react'
 
+import InputLabel from './InputLabel'
+
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   label: string
 }
 
-export default function Input({ label, ...props }: InputProps) {
+export default function Input({ label, id, ...props }: InputProps) {
   return (
     <div className="flex flex-col gap-1 text-left">
-      <label
-        htmlFor={props.id}
-        className="text-sm font-semibold text-[#35383E]"
-      >
-        {label}
-      </label>
+      <InputLabel htmlFor={id}>{label}</InputLabel>
       <input
         {...props}
         type="text"
