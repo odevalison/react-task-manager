@@ -16,6 +16,11 @@ interface AddTaskDialogProps {
   handleAdd: (task: Task) => void
 }
 
+export type Error = {
+  field: string
+  message: string
+}
+
 export default function AddTaskDialog({
   isOpen,
   handleClose,
@@ -24,6 +29,7 @@ export default function AddTaskDialog({
   const [time, setTime] = useState<TaskTime>('morning')
   const [title, setTitle] = useState<string>('')
   const [description, setDescription] = useState<string>('')
+  const [errors, setErrors] = useState<Error[]>([])
 
   useEffect(() => {
     if (!isOpen) {
@@ -36,9 +42,32 @@ export default function AddTaskDialog({
   const nodeRef = useRef<HTMLDivElement>(null)
 
   const handleSaveClick = () => {
-    if (!title.trim() || !description.trim() || !time.trim()) {
-      return alert('preencha todos os campos!')
+    const currentErrors = [] as Error[]
+
+    if (!title.trim()) {
+      currentErrors.push({
+        field: 'title',
+        message: 'O título é obrigatório.',
+      })
     }
+    if (!time.trim()) {
+      currentErrors.push({
+        field: 'time',
+        message: 'O horário é obrigatório.',
+      })
+    }
+    if (!description.trim()) {
+      currentErrors.push({
+        field: 'description',
+        message: 'A descrição é obrigatória.',
+      })
+    }
+
+    if (currentErrors.length) {
+      setErrors(currentErrors)
+      return
+    }
+
     handleAdd({
       title,
       description,
@@ -48,6 +77,12 @@ export default function AddTaskDialog({
     })
     handleClose()
   }
+
+  const titleError = errors.find((error) => error.field === 'title') as Error
+  const descriptionError = errors.find(
+    (error) => error.field === 'description'
+  ) as Error
+  const timeError = errors.find((error) => error.field === 'time') as Error
 
   return (
     <CSSTransition
@@ -78,11 +113,13 @@ export default function AddTaskDialog({
                   label="Título"
                   id="title"
                   placeholder="Título da tarefa"
+                  error={titleError?.message}
                   value={title}
                   onChange={(event) => setTitle(event.target.value)}
                 />
 
                 <TimeSelect
+                  error={timeError?.message}
                   value={time}
                   onChange={(event) => setTime(event.target.value as TaskTime)}
                 />
@@ -91,6 +128,7 @@ export default function AddTaskDialog({
                   label="Descrição"
                   id="description"
                   placeholder="Descreva a tarefa"
+                  error={descriptionError?.message}
                   value={description}
                   onChange={(event) => setDescription(event.target.value)}
                 />

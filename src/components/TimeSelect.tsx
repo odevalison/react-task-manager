@@ -1,10 +1,13 @@
 import { SelectHTMLAttributes } from 'react'
 
+import InputError from './InputError'
 import InputLabel from './InputLabel'
 
-export default function TimeSelect({
-  ...props
-}: SelectHTMLAttributes<HTMLSelectElement>) {
+interface TimeSelectProps extends SelectHTMLAttributes<HTMLSelectElement> {
+  error?: string
+}
+
+export default function TimeSelect({ error = '', ...props }: TimeSelectProps) {
   return (
     <div className="flex flex-col gap-1 text-left">
       <InputLabel htmlFor="time">Horário</InputLabel>
@@ -17,6 +20,7 @@ export default function TimeSelect({
         <option value="afternoon">Tarde</option>
         <option value="evening">Noite</option>
       </select>
+      {error && <InputError>{error}</InputError>}
     </div>
   )
 }
