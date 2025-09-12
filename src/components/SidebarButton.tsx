@@ -11,9 +11,9 @@ export default function SidebarButton({
 }: SidebarButtonProps) {
   const getVariantClasses = () => {
     if (variant === 'default') {
-      return 'text-[#35383E]'
+      return 'text-brand-dark-blue'
     } else if (variant === 'selected') {
-      return 'bg-[#E6F7F8] text-[#00ADB5]'
+      return 'bg-brand-primary/15 text-brand-primary'
     }
   }
 

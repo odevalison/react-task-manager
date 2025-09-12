@@ -6,7 +6,7 @@ interface InputLabelProps extends LabelHTMLAttributes<HTMLLabelElement> {
 
 export default function InputLabel({ children, ...props }: InputLabelProps) {
   return (
-    <label {...props} className="text-sm font-semibold text-[#35383E]">
+    <label {...props} className="text-sm font-semibold text-brand-dark-blue">
       {children}
     </label>
   )

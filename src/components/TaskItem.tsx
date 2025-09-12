@@ -4,8 +4,8 @@ import Button from './Button'
 
 interface TaskItemProps {
   task: Task
-  handleCheckboxClick: (taskId: number) => void
-  handleDeleteClick: (taskId: number) => void
+  handleCheckboxClick: (taskId: number | string) => void
+  handleDeleteClick: (taskId: number | string) => void
 }
 
 export default function TaskItem({
@@ -15,11 +15,11 @@ export default function TaskItem({
 }: TaskItemProps) {
   const getClassesByStatus = () => {
     if (task.status === 'complete') {
-      return 'bg-[#00ADB5] text-sm font-medium text-[#002C2E]'
+      return 'bg-brand-primary text-sm font-medium text-brand-primary'
     } else if (task.status === 'not_started') {
-      return 'bg-[#35383E] text-sm bg-opacity-10 font-medium text-[#35383E]'
+      return 'bg-brand-dark-blue text-sm bg-opacity-10 font-medium text-brand-dark-gray'
     } else if (task.status === 'in_progress') {
-      return 'bg-[#FFAA04] text-sm font-medium text-black/60'
+      return 'bg-brand-process text-sm font-medium text-brand-process'
     }
   }
 
@@ -48,7 +48,7 @@ export default function TaskItem({
 
       <div className="flex items-center gap-2">
         <Button variant="ghost" onClick={() => handleDeleteClick(task.id)}>
-          <TrashIcon className="text-[#9A9C9F]" />
+          <TrashIcon className="text-brand-text-gray" />
         </Button>
 
         <a href="#" className="transition hover:opacity-75">

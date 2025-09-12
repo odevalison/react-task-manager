@@ -16,7 +16,7 @@ const TimeSelect = forwardRef<HTMLSelectElement, TimeSelectProps>(
           {...props}
           ref={ref}
           id="time"
-          className="rounded-lg border border-[#ECECEC] px-4 py-3 text-sm outline-[#00ADB5] placeholder:text-sm placeholder:text-[#9A9C9F]"
+          className="rounded-lg border border-brand-border px-4 py-3 text-sm outline-brand-primary placeholder:text-sm placeholder:text-brand-text-gray"
         >
           <option value="morning">Manhã</option>
           <option value="afternoon">Tarde</option>

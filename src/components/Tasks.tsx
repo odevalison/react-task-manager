@@ -64,7 +64,7 @@ export default function Tasks() {
     <main className="w-full space-y-6 px-8 py-16">
       <div className="flex justify-between">
         <div className="space-y-1.5">
-          <span className="text-semibold text-xs font-semibold text-[#00ADB5]">
+          <span className="text-semibold text-xs font-semibold text-brand-primary">
             Minhas Tarefas
           </span>
           <h2 className="text-xl font-semibold">Minhas Tarefas</h2>

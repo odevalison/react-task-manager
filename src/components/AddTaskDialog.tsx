@@ -97,10 +97,10 @@ export default function AddTaskDialog({
           >
             <div className="min-w-96 max-w-full space-y-4 rounded-xl bg-white p-5 text-center shadow">
               <div className="space-y-1">
-                <h2 className="text-xl font-semibold text-[#35383E]">
+                <h2 className="text-xl font-semibold text-brand-dark-blue">
                   Nova Tarefa
                 </h2>
-                <p className="text-sm text-[#9A9C9F]">
+                <p className="text-sm text-brand-text-gray">
                   Insira as informações abaixo
                 </p>
               </div>

@@ -16,7 +16,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
         {...props}
         ref={ref}
         type="text"
-        className="rounded-lg border border-[#ECECEC] px-4 py-3 text-sm outline-[#00ADB5] placeholder:text-sm placeholder:text-[#9A9C9F]"
+        className="rounded-lg border border-brand-border px-4 py-3 text-sm outline-brand-primary placeholder:text-sm placeholder:text-brand-text-gray"
       />
       {error && <InputError>{error}</InputError>}
     </div>
