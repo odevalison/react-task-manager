@@ -1,42 +1,37 @@
 import { ButtonHTMLAttributes } from 'react'
+import { tv, VariantProps } from 'tailwind-variants'
 
-type ButtonVariants = 'ghost' | 'primary' | 'secondary'
-type ButtonSizes = 'sm' | 'lg'
+const button = tv({
+  base: 'flex items-center justify-center gap-1 rounded-md px-3 font-semibold transition hover:opacity-85',
+  variants: {
+    color: {
+      primary: 'bg-brand-primary text-white',
+      ghost: 'bg-transparent text-brand-dark-gray',
+      secondary: 'bg-brand-light-gray text-brand-dark-blue',
+    },
+    size: {
+      small: 'py-1 text-xs',
+      large: 'py-2 text-sm',
+    },
+  },
+  defaultVariants: {
+    color: 'primary',
+    size: 'small',
+  },
+})
+
+type ButtonVariants = VariantProps<typeof button>
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode
   variant?: ButtonVariants
-  size?: ButtonSizes
 }
 
-export default function Button({
-  children,
-  variant = 'primary',
-  size = 'sm',
-  ...props
-}: ButtonProps) {
-  const getVariantClasses = () => {
-    if (variant === 'primary') {
-      return 'bg-brand-primary text-white'
-    } else if (variant === 'ghost') {
-      return 'bg-transparent text-brand-dark-gray'
-    } else if (variant === 'secondary') {
-      return 'bg-brand-light-gray text-brand-dark-blue'
-    }
-  }
-
-  const getSizeClasses = () => {
-    if (size === 'sm') {
-      return 'py-1 text-xs'
-    } else if (size === 'lg') {
-      return 'text-sm py-2'
-    }
-  }
-
+export default function Button({ children, variant, ...props }: ButtonProps) {
   return (
     <button
       {...props}
-      className={`flex items-center justify-center gap-1 rounded-md px-3 font-semibold transition hover:opacity-85 ${getVariantClasses()} ${getSizeClasses()}`}
+      className={button({ ...variant, className: props.className })}
     >
       {children}
     </button>

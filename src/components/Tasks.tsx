@@ -23,7 +23,7 @@ export default function Tasks() {
   const afternoonTasks = tasks.filter((task) => task.time === 'afternoon')
   const eveningTasks = tasks.filter((task) => task.time === 'evening')
 
-  const handleTaskCheckboxClick = (taskId: number) => {
+  const handleTaskCheckboxClick = (taskId: number | string) => {
     const newTasks: Task[] = tasks.map((task) => {
       if (task.id !== taskId) {
         return task
@@ -46,7 +46,7 @@ export default function Tasks() {
     setTasks(newTasks)
   }
 
-  const handleTaskDeleteClick = (taskId: number) => {
+  const handleTaskDeleteClick = (taskId: number | string) => {
     const tasksWithoutDeletedTask: Task[] = tasks.filter(
       (task) => task.id !== taskId
     )
@@ -71,7 +71,7 @@ export default function Tasks() {
         </div>
 
         <div className="flex items-center gap-2.5">
-          <Button variant="ghost">
+          <Button variant={{ color: 'ghost', size: 'small' }}>
             Limpar tarefas <TrashIcon />
           </Button>
 

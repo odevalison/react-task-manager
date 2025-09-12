@@ -126,13 +126,12 @@ export default function AddTaskDialog({
 
                 <div className="flex gap-3 *:flex-1">
                   <Button
-                    size="lg"
-                    variant="secondary"
+                    variant={{ color: 'secondary', size: 'large' }}
                     onClick={() => handleClose()}
                   >
                     Cancelar
                   </Button>
-                  <Button size="lg" onClick={handleSaveClick}>
+                  <Button variant={{ size: 'large' }} onClick={handleSaveClick}>
                     Salvar
                   </Button>
                 </div>
