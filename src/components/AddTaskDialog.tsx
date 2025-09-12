@@ -63,8 +63,9 @@ export default function AddTaskDialog({
       })
     }
 
+    setErrors(currentErrors)
+
     if (currentErrors.length) {
-      setErrors(currentErrors)
       return
     }
 
