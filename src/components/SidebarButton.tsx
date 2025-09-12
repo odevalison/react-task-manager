@@ -1,26 +1,38 @@
-type SidebarButtonVariants = 'default' | 'selected'
+import { AnchorHTMLAttributes } from 'react'
+import { tv, VariantProps } from 'tailwind-variants'
 
-interface SidebarButtonProps {
+const sidebarButton = tv({
+  base: 'flex items-center gap-2 rounded-lg px-6 py-3',
+  variants: {
+    color: {
+      selected: 'bg-brand-primary/15 text-brand-primary',
+      unselected: 'text-brand-dark-blue',
+    },
+  },
+  defaultVariants: {
+    color: 'unselected',
+  },
+})
+
+type SidebarButtonVariants = VariantProps<typeof sidebarButton>
+
+interface SidebarButtonProps extends AnchorHTMLAttributes<HTMLAnchorElement> {
   variant?: SidebarButtonVariants
-  children: React.ReactNode
 }
 
 export default function SidebarButton({
   children,
-  variant = 'default',
+  variant,
+  ...props
 }: SidebarButtonProps) {
-  const getVariantClasses = () => {
-    if (variant === 'default') {
-      return 'text-brand-dark-blue'
-    } else if (variant === 'selected') {
-      return 'bg-brand-primary/15 text-brand-primary'
-    }
-  }
-
   return (
     <a
+      {...props}
       href="#"
-      className={`flex items-center gap-2 rounded-lg px-6 py-3 ${getVariantClasses()}`}
+      className={sidebarButton({
+        color: variant?.color,
+        className: props.className,
+      })}
     >
       {children}
     </a>
