@@ -38,7 +38,6 @@ export default function Tasks() {
       if (task.id !== taskId) {
         return task
       }
-
       if (task.status === 'not_started') {
         toast.success('Tarefa iniciada com sucesso!')
         return { ...task, status: 'in_progress' }
@@ -49,10 +48,8 @@ export default function Tasks() {
         toast.success('Tarefa reiniciada com sucesso!')
         return { ...task, status: 'not_started' }
       }
-
       return task
     })
-
     setTasks(newTasks)
   }
 
