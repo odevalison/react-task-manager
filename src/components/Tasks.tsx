@@ -16,7 +16,7 @@ import TasksSeparator from './TasksSeparator'
 
 export default function Tasks() {
   const [tasks, setTasks] = useState<Task[]>([])
-  const [addTaskDialogIsOpen, setAddTaskDialogIsOpen] = useState(false)
+  const [addTaskDialogIsOpen, setAddTaskDialogIsOpen] = useState<boolean>(false)
 
   useEffect(() => {
     const loadTasks = async () => {
@@ -56,20 +56,11 @@ export default function Tasks() {
     setTasks(newTasks)
   }
 
-  const handleTaskDeleteClick = async (taskId: string) => {
+  const onDeleteTaskSuccess = async (taskId: string) => {
     const tasksWithoutDeletedTask: Task[] = tasks.filter(
       (task) => task.id !== taskId
     )
-    const response = await fetch(`http://localhost:3000/tasks/${taskId}`, {
-      method: 'DELETE',
-    })
-    const isNotSuccessResponse = !response.ok
-    if (isNotSuccessResponse) {
-      toast.error('Erro ao excluir a tarefa, tente novamente.')
-      return
-    }
     setTasks(tasksWithoutDeletedTask)
-
     toast.success('Tarefa deletada com sucesso!')
   }
 
@@ -94,6 +85,7 @@ export default function Tasks() {
           <span className="text-semibold text-xs font-semibold text-brand-primary">
             Minhas Tarefas
           </span>
+
           <h2 className="text-xl font-semibold">Minhas Tarefas</h2>
         </div>
 
@@ -120,8 +112,8 @@ export default function Tasks() {
 
           {morningTasks.map((task) => (
             <TaskItem
-              handleDeleteClick={handleTaskDeleteClick}
               handleCheckboxClick={handleTaskCheckboxClick}
+              onDeleteSuccess={onDeleteTaskSuccess}
               key={task.id}
               task={task}
             />
@@ -133,8 +125,8 @@ export default function Tasks() {
 
           {afternoonTasks.map((task) => (
             <TaskItem
-              handleDeleteClick={handleTaskDeleteClick}
               handleCheckboxClick={handleTaskCheckboxClick}
+              onDeleteSuccess={onDeleteTaskSuccess}
               key={task.id}
               task={task}
             />
@@ -146,8 +138,8 @@ export default function Tasks() {
 
           {eveningTasks.map((task) => (
             <TaskItem
-              handleDeleteClick={handleTaskDeleteClick}
               handleCheckboxClick={handleTaskCheckboxClick}
+              onDeleteSuccess={onDeleteTaskSuccess}
               key={task.id}
               task={task}
             />

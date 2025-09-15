@@ -1,18 +1,38 @@
+import { useState } from 'react'
+import { toast } from 'sonner'
+
 import { CheckIcon, DetailsIcon, LoaderIcon, TrashIcon } from '../assets/icons'
 import { Task } from '../types/tasks'
 import Button from './Button'
 
 interface TaskItemProps {
   task: Task
+  onDeleteSuccess: (taskId: string) => void
   handleCheckboxClick: (taskId: string) => void
-  handleDeleteClick: (taskId: string) => void
 }
 
 export default function TaskItem({
   task,
   handleCheckboxClick,
-  handleDeleteClick,
+  onDeleteSuccess,
 }: TaskItemProps) {
+  const [isBeingDeleted, setIsBeingDeleted] = useState<boolean>(false)
+
+  const onDelete = async () => {
+    setIsBeingDeleted(true)
+    const response = await fetch(`http://localhost:3000/tasks/${task.id}`, {
+      method: 'DELETE',
+    })
+    const isNotSuccessResponse = !response.ok
+    if (isNotSuccessResponse) {
+      setIsBeingDeleted(false)
+      toast.error('Erro ao excluir a tarefa, tente novamente.')
+      return
+    }
+    onDeleteSuccess(task.id)
+    setIsBeingDeleted(false)
+  }
+
   const getClassesByStatus = () => {
     if (task.status === 'complete') {
       return 'bg-brand-primary text-sm font-medium text-brand-primary'
@@ -39,7 +59,7 @@ export default function TaskItem({
           />
           {task.status === 'complete' && <CheckIcon />}
           {task.status === 'in_progress' && (
-            <LoaderIcon className="animate-spin" />
+            <LoaderIcon className="animate-spin text-brand-white" />
           )}
         </label>
 
@@ -49,9 +69,14 @@ export default function TaskItem({
       <div className="flex items-center gap-2">
         <Button
           variant={{ color: 'ghost' }}
-          onClick={() => handleDeleteClick(task.id)}
+          onClick={onDelete}
+          disabled={isBeingDeleted}
         >
-          <TrashIcon className="text-brand-text-gray" />
+          {isBeingDeleted ? (
+            <LoaderIcon className="animate-spin text-brand-text-gray" />
+          ) : (
+            <TrashIcon className="text-brand-text-gray" />
+          )}
         </Button>
 
         <a href="#" className="transition hover:opacity-75">
