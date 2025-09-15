@@ -56,10 +56,18 @@ export default function Tasks() {
     setTasks(newTasks)
   }
 
-  const handleTaskDeleteClick = (taskId: string) => {
+  const handleTaskDeleteClick = async (taskId: string) => {
     const tasksWithoutDeletedTask: Task[] = tasks.filter(
       (task) => task.id !== taskId
     )
+    const response = await fetch(`http://localhost:3000/tasks/${taskId}`, {
+      method: 'DELETE',
+    })
+    const isNotSuccessResponse = !response.ok
+    if (isNotSuccessResponse) {
+      toast.error('Erro ao excluir a tarefa, tente novamente.')
+      return
+    }
     setTasks(tasksWithoutDeletedTask)
 
     toast.success('Tarefa deletada com sucesso!')
