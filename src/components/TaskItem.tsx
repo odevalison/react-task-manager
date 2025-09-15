@@ -7,29 +7,32 @@ import Button from './Button'
 
 interface TaskItemProps {
   task: Task
-  onDeleteSuccess: (taskId: string) => void
+  handleDeleteTaskSuccess: (taskId: string) => void
   handleCheckboxClick: (taskId: string) => void
 }
 
 export default function TaskItem({
   task,
   handleCheckboxClick,
-  onDeleteSuccess,
+  handleDeleteTaskSuccess,
 }: TaskItemProps) {
   const [isBeingDeleted, setIsBeingDeleted] = useState<boolean>(false)
 
-  const onDelete = async () => {
+  const handleDelete = async () => {
     setIsBeingDeleted(true)
+
     const response = await fetch(`http://localhost:3000/tasks/${task.id}`, {
       method: 'DELETE',
     })
+
     const isNotSuccessResponse = !response.ok
     if (isNotSuccessResponse) {
       setIsBeingDeleted(false)
       toast.error('Erro ao excluir a tarefa, tente novamente.')
       return
     }
-    onDeleteSuccess(task.id)
+
+    handleDeleteTaskSuccess(task.id)
     setIsBeingDeleted(false)
   }
 
@@ -69,7 +72,7 @@ export default function TaskItem({
       <div className="flex items-center gap-2">
         <Button
           variant={{ color: 'ghost' }}
-          onClick={onDelete}
+          onClick={handleDelete}
           disabled={isBeingDeleted}
         >
           {isBeingDeleted ? (

@@ -1,18 +1,481 @@
 {
   "tasks": [
     {
-      "id": "f08050a8-f2ee-4b65-948e-574b6e82ad40",
+      "id": "8587a934-2c66-4d9f-a181-0116c9ddc808",
+      "title": "Orar",
+      "description": "Orar para a prova de amanhã (P.P)",
+      "time": "evening",
+      "status": "not_started"
+    },
+    {
+      "id": "60507adf-962b-4a47-b8ad-f488ce103bda",
+      "title": "Ler Livro",
+      "description": "Ler livro \"Como tomar boas notas\"",
+      "time": "morning",
+      "status": "not_started"
+    },
+    {
+      "id": "da8ccd62-3d4f-471a-8da0-ad2aa02f6776",
       "title": "Estudar React (FSC)",
-      "description": "Estudar React",
+      "description": "Continuar projeto React do FSC",
       "time": "afternoon",
       "status": "not_started"
     },
     {
-      "id": "a399f149-699a-4c8c-91c0-7eb97ea979a3",
-      "title": "Estudar Docker (Youtube)",
-      "description": "Estudar Docker pelo Youtube",
-      "time": "afternoon",
-      "status": "not_started"
+      "0": {
+        "id": "8587a934-2c66-4d9f-a181-0116c9ddc808",
+        "title": "Orar",
+        "description": "Orar para a prova de amanhã (P.P)",
+        "time": "evening",
+        "status": "not_started"
+      },
+      "1": {
+        "id": "60507adf-962b-4a47-b8ad-f488ce103bda",
+        "title": "Ler Livro",
+        "description": "Ler livro \"Como tomar boas notas\"",
+        "time": "morning",
+        "status": "not_started"
+      },
+      "2": {
+        "id": "da8ccd62-3d4f-471a-8da0-ad2aa02f6776",
+        "title": "Estudar React (FSC)",
+        "description": "Continuar projeto React do FSC",
+        "time": "afternoon",
+        "status": "in_progress"
+      },
+      "id": "147e"
+    },
+    {
+      "0": {
+        "id": "8587a934-2c66-4d9f-a181-0116c9ddc808",
+        "title": "Orar",
+        "description": "Orar para a prova de amanhã (P.P)",
+        "time": "evening",
+        "status": "not_started"
+      },
+      "1": {
+        "id": "60507adf-962b-4a47-b8ad-f488ce103bda",
+        "title": "Ler Livro",
+        "description": "Ler livro \"Como tomar boas notas\"",
+        "time": "morning",
+        "status": "not_started"
+      },
+      "2": {
+        "id": "da8ccd62-3d4f-471a-8da0-ad2aa02f6776",
+        "title": "Estudar React (FSC)",
+        "description": "Continuar projeto React do FSC",
+        "time": "afternoon",
+        "status": "in_progress"
+      },
+      "3": {
+        "0": {
+          "id": "8587a934-2c66-4d9f-a181-0116c9ddc808",
+          "title": "Orar",
+          "description": "Orar para a prova de amanhã (P.P)",
+          "time": "evening",
+          "status": "not_started"
+        },
+        "1": {
+          "id": "60507adf-962b-4a47-b8ad-f488ce103bda",
+          "title": "Ler Livro",
+          "description": "Ler livro \"Como tomar boas notas\"",
+          "time": "morning",
+          "status": "not_started"
+        },
+        "2": {
+          "id": "da8ccd62-3d4f-471a-8da0-ad2aa02f6776",
+          "title": "Estudar React (FSC)",
+          "description": "Continuar projeto React do FSC",
+          "time": "afternoon",
+          "status": "in_progress"
+        },
+        "id": "147e"
+      },
+      "id": "14cd"
+    },
+    {
+      "0": {
+        "id": "8587a934-2c66-4d9f-a181-0116c9ddc808",
+        "title": "Orar",
+        "description": "Orar para a prova de amanhã (P.P)",
+        "time": "evening",
+        "status": "not_started"
+      },
+      "1": {
+        "id": "60507adf-962b-4a47-b8ad-f488ce103bda",
+        "title": "Ler Livro",
+        "description": "Ler livro \"Como tomar boas notas\"",
+        "time": "morning",
+        "status": "not_started"
+      },
+      "2": {
+        "id": "da8ccd62-3d4f-471a-8da0-ad2aa02f6776",
+        "title": "Estudar React (FSC)",
+        "description": "Continuar projeto React do FSC",
+        "time": "afternoon",
+        "status": "in_progress"
+      },
+      "3": {
+        "0": {
+          "id": "8587a934-2c66-4d9f-a181-0116c9ddc808",
+          "title": "Orar",
+          "description": "Orar para a prova de amanhã (P.P)",
+          "time": "evening",
+          "status": "not_started"
+        },
+        "1": {
+          "id": "60507adf-962b-4a47-b8ad-f488ce103bda",
+          "title": "Ler Livro",
+          "description": "Ler livro \"Como tomar boas notas\"",
+          "time": "morning",
+          "status": "not_started"
+        },
+        "2": {
+          "id": "da8ccd62-3d4f-471a-8da0-ad2aa02f6776",
+          "title": "Estudar React (FSC)",
+          "description": "Continuar projeto React do FSC",
+          "time": "afternoon",
+          "status": "in_progress"
+        },
+        "id": "147e"
+      },
+      "4": {
+        "0": {
+          "id": "8587a934-2c66-4d9f-a181-0116c9ddc808",
+          "title": "Orar",
+          "description": "Orar para a prova de amanhã (P.P)",
+          "time": "evening",
+          "status": "not_started"
+        },
+        "1": {
+          "id": "60507adf-962b-4a47-b8ad-f488ce103bda",
+          "title": "Ler Livro",
+          "description": "Ler livro \"Como tomar boas notas\"",
+          "time": "morning",
+          "status": "not_started"
+        },
+        "2": {
+          "id": "da8ccd62-3d4f-471a-8da0-ad2aa02f6776",
+          "title": "Estudar React (FSC)",
+          "description": "Continuar projeto React do FSC",
+          "time": "afternoon",
+          "status": "in_progress"
+        },
+        "3": {
+          "0": {
+            "id": "8587a934-2c66-4d9f-a181-0116c9ddc808",
+            "title": "Orar",
+            "description": "Orar para a prova de amanhã (P.P)",
+            "time": "evening",
+            "status": "not_started"
+          },
+          "1": {
+            "id": "60507adf-962b-4a47-b8ad-f488ce103bda",
+            "title": "Ler Livro",
+            "description": "Ler livro \"Como tomar boas notas\"",
+            "time": "morning",
+            "status": "not_started"
+          },
+          "2": {
+            "id": "da8ccd62-3d4f-471a-8da0-ad2aa02f6776",
+            "title": "Estudar React (FSC)",
+            "description": "Continuar projeto React do FSC",
+            "time": "afternoon",
+            "status": "in_progress"
+          },
+          "id": "147e"
+        },
+        "id": "14cd"
+      },
+      "id": "39d7"
+    },
+    {
+      "0": {
+        "id": "8587a934-2c66-4d9f-a181-0116c9ddc808",
+        "title": "Orar",
+        "description": "Orar para a prova de amanhã (P.P)",
+        "time": "evening",
+        "status": "not_started"
+      },
+      "1": {
+        "id": "60507adf-962b-4a47-b8ad-f488ce103bda",
+        "title": "Ler Livro",
+        "description": "Ler livro \"Como tomar boas notas\"",
+        "time": "morning",
+        "status": "not_started"
+      },
+      "2": {
+        "id": "da8ccd62-3d4f-471a-8da0-ad2aa02f6776",
+        "title": "Estudar React (FSC)",
+        "description": "Continuar projeto React do FSC",
+        "time": "afternoon",
+        "status": "complete"
+      },
+      "3": {
+        "0": {
+          "id": "8587a934-2c66-4d9f-a181-0116c9ddc808",
+          "title": "Orar",
+          "description": "Orar para a prova de amanhã (P.P)",
+          "time": "evening",
+          "status": "not_started"
+        },
+        "1": {
+          "id": "60507adf-962b-4a47-b8ad-f488ce103bda",
+          "title": "Ler Livro",
+          "description": "Ler livro \"Como tomar boas notas\"",
+          "time": "morning",
+          "status": "not_started"
+        },
+        "2": {
+          "id": "da8ccd62-3d4f-471a-8da0-ad2aa02f6776",
+          "title": "Estudar React (FSC)",
+          "description": "Continuar projeto React do FSC",
+          "time": "afternoon",
+          "status": "in_progress"
+        },
+        "id": "147e"
+      },
+      "4": {
+        "0": {
+          "id": "8587a934-2c66-4d9f-a181-0116c9ddc808",
+          "title": "Orar",
+          "description": "Orar para a prova de amanhã (P.P)",
+          "time": "evening",
+          "status": "not_started"
+        },
+        "1": {
+          "id": "60507adf-962b-4a47-b8ad-f488ce103bda",
+          "title": "Ler Livro",
+          "description": "Ler livro \"Como tomar boas notas\"",
+          "time": "morning",
+          "status": "not_started"
+        },
+        "2": {
+          "id": "da8ccd62-3d4f-471a-8da0-ad2aa02f6776",
+          "title": "Estudar React (FSC)",
+          "description": "Continuar projeto React do FSC",
+          "time": "afternoon",
+          "status": "in_progress"
+        },
+        "3": {
+          "0": {
+            "id": "8587a934-2c66-4d9f-a181-0116c9ddc808",
+            "title": "Orar",
+            "description": "Orar para a prova de amanhã (P.P)",
+            "time": "evening",
+            "status": "not_started"
+          },
+          "1": {
+            "id": "60507adf-962b-4a47-b8ad-f488ce103bda",
+            "title": "Ler Livro",
+            "description": "Ler livro \"Como tomar boas notas\"",
+            "time": "morning",
+            "status": "not_started"
+          },
+          "2": {
+            "id": "da8ccd62-3d4f-471a-8da0-ad2aa02f6776",
+            "title": "Estudar React (FSC)",
+            "description": "Continuar projeto React do FSC",
+            "time": "afternoon",
+            "status": "in_progress"
+          },
+          "id": "147e"
+        },
+        "id": "14cd"
+      },
+      "id": "f3a1"
+    },
+    {
+      "0": {
+        "id": "8587a934-2c66-4d9f-a181-0116c9ddc808",
+        "title": "Orar",
+        "description": "Orar para a prova de amanhã (P.P)",
+        "time": "evening",
+        "status": "not_started"
+      },
+      "1": {
+        "id": "60507adf-962b-4a47-b8ad-f488ce103bda",
+        "title": "Ler Livro",
+        "description": "Ler livro \"Como tomar boas notas\"",
+        "time": "morning",
+        "status": "not_started"
+      },
+      "2": {
+        "id": "da8ccd62-3d4f-471a-8da0-ad2aa02f6776",
+        "title": "Estudar React (FSC)",
+        "description": "Continuar projeto React do FSC",
+        "time": "afternoon",
+        "status": "not_started"
+      },
+      "3": {
+        "0": {
+          "id": "8587a934-2c66-4d9f-a181-0116c9ddc808",
+          "title": "Orar",
+          "description": "Orar para a prova de amanhã (P.P)",
+          "time": "evening",
+          "status": "not_started"
+        },
+        "1": {
+          "id": "60507adf-962b-4a47-b8ad-f488ce103bda",
+          "title": "Ler Livro",
+          "description": "Ler livro \"Como tomar boas notas\"",
+          "time": "morning",
+          "status": "not_started"
+        },
+        "2": {
+          "id": "da8ccd62-3d4f-471a-8da0-ad2aa02f6776",
+          "title": "Estudar React (FSC)",
+          "description": "Continuar projeto React do FSC",
+          "time": "afternoon",
+          "status": "in_progress"
+        },
+        "id": "147e"
+      },
+      "4": {
+        "0": {
+          "id": "8587a934-2c66-4d9f-a181-0116c9ddc808",
+          "title": "Orar",
+          "description": "Orar para a prova de amanhã (P.P)",
+          "time": "evening",
+          "status": "not_started"
+        },
+        "1": {
+          "id": "60507adf-962b-4a47-b8ad-f488ce103bda",
+          "title": "Ler Livro",
+          "description": "Ler livro \"Como tomar boas notas\"",
+          "time": "morning",
+          "status": "not_started"
+        },
+        "2": {
+          "id": "da8ccd62-3d4f-471a-8da0-ad2aa02f6776",
+          "title": "Estudar React (FSC)",
+          "description": "Continuar projeto React do FSC",
+          "time": "afternoon",
+          "status": "in_progress"
+        },
+        "3": {
+          "0": {
+            "id": "8587a934-2c66-4d9f-a181-0116c9ddc808",
+            "title": "Orar",
+            "description": "Orar para a prova de amanhã (P.P)",
+            "time": "evening",
+            "status": "not_started"
+          },
+          "1": {
+            "id": "60507adf-962b-4a47-b8ad-f488ce103bda",
+            "title": "Ler Livro",
+            "description": "Ler livro \"Como tomar boas notas\"",
+            "time": "morning",
+            "status": "not_started"
+          },
+          "2": {
+            "id": "da8ccd62-3d4f-471a-8da0-ad2aa02f6776",
+            "title": "Estudar React (FSC)",
+            "description": "Continuar projeto React do FSC",
+            "time": "afternoon",
+            "status": "in_progress"
+          },
+          "id": "147e"
+        },
+        "id": "14cd"
+      },
+      "id": "8f10"
+    },
+    {
+      "0": {
+        "id": "8587a934-2c66-4d9f-a181-0116c9ddc808",
+        "title": "Orar",
+        "description": "Orar para a prova de amanhã (P.P)",
+        "time": "evening",
+        "status": "not_started"
+      },
+      "1": {
+        "id": "60507adf-962b-4a47-b8ad-f488ce103bda",
+        "title": "Ler Livro",
+        "description": "Ler livro \"Como tomar boas notas\"",
+        "time": "morning",
+        "status": "not_started"
+      },
+      "2": {
+        "id": "da8ccd62-3d4f-471a-8da0-ad2aa02f6776",
+        "title": "Estudar React (FSC)",
+        "description": "Continuar projeto React do FSC",
+        "time": "afternoon",
+        "status": "in_progress"
+      },
+      "3": {
+        "0": {
+          "id": "8587a934-2c66-4d9f-a181-0116c9ddc808",
+          "title": "Orar",
+          "description": "Orar para a prova de amanhã (P.P)",
+          "time": "evening",
+          "status": "not_started"
+        },
+        "1": {
+          "id": "60507adf-962b-4a47-b8ad-f488ce103bda",
+          "title": "Ler Livro",
+          "description": "Ler livro \"Como tomar boas notas\"",
+          "time": "morning",
+          "status": "not_started"
+        },
+        "2": {
+          "id": "da8ccd62-3d4f-471a-8da0-ad2aa02f6776",
+          "title": "Estudar React (FSC)",
+          "description": "Continuar projeto React do FSC",
+          "time": "afternoon",
+          "status": "in_progress"
+        },
+        "id": "147e"
+      },
+      "4": {
+        "0": {
+          "id": "8587a934-2c66-4d9f-a181-0116c9ddc808",
+          "title": "Orar",
+          "description": "Orar para a prova de amanhã (P.P)",
+          "time": "evening",
+          "status": "not_started"
+        },
+        "1": {
+          "id": "60507adf-962b-4a47-b8ad-f488ce103bda",
+          "title": "Ler Livro",
+          "description": "Ler livro \"Como tomar boas notas\"",
+          "time": "morning",
+          "status": "not_started"
+        },
+        "2": {
+          "id": "da8ccd62-3d4f-471a-8da0-ad2aa02f6776",
+          "title": "Estudar React (FSC)",
+          "description": "Continuar projeto React do FSC",
+          "time": "afternoon",
+          "status": "in_progress"
+        },
+        "3": {
+          "0": {
+            "id": "8587a934-2c66-4d9f-a181-0116c9ddc808",
+            "title": "Orar",
+            "description": "Orar para a prova de amanhã (P.P)",
+            "time": "evening",
+            "status": "not_started"
+          },
+          "1": {
+            "id": "60507adf-962b-4a47-b8ad-f488ce103bda",
+            "title": "Ler Livro",
+            "description": "Ler livro \"Como tomar boas notas\"",
+            "time": "morning",
+            "status": "not_started"
+          },
+          "2": {
+            "id": "da8ccd62-3d4f-471a-8da0-ad2aa02f6776",
+            "title": "Estudar React (FSC)",
+            "description": "Continuar projeto React do FSC",
+            "time": "afternoon",
+            "status": "in_progress"
+          },
+          "id": "147e"
+        },
+        "id": "14cd"
+      },
+      "id": "f7ac"
     }
   ]
 }

@@ -33,7 +33,7 @@ export default function Tasks() {
   const afternoonTasks = tasks.filter((task) => task.time === 'afternoon')
   const eveningTasks = tasks.filter((task) => task.time === 'evening')
 
-  const handleTaskCheckboxClick = (taskId: string) => {
+  const handleTaskCheckboxClick = async (taskId: string) => {
     const newTasks: Task[] = tasks.map((task) => {
       if (task.id !== taskId) {
         return task
@@ -56,26 +56,19 @@ export default function Tasks() {
     setTasks(newTasks)
   }
 
-  const onDeleteTaskSuccess = async (taskId: string) => {
-    const tasksWithoutDeletedTask: Task[] = tasks.filter(
-      (task) => task.id !== taskId
-    )
-    setTasks(tasksWithoutDeletedTask)
+  const handleDeleteTaskSuccess = async (taskId: string) => {
+    const nonDeletedTasks: Task[] = tasks.filter((task) => task.id !== taskId)
+    setTasks(nonDeletedTasks)
     toast.success('Tarefa deletada com sucesso!')
   }
 
-  const handleAddTask = async (newTask: Task) => {
-    const response = await fetch('http://localhost:3000/tasks', {
-      method: 'POST',
-      body: JSON.stringify(newTask),
-    })
-    const isNotSuccessResponse = !response.ok
-    if (isNotSuccessResponse) {
-      toast.error('Erro ao adicionar tarefa, tente novamente.')
-      return
-    }
+  const handleCreateTaskSuccess = async (newTask: Task) => {
     setTasks((prevTasks) => [...prevTasks, newTask])
     toast.success('Tarefa adicionada com sucesso!')
+  }
+
+  const handleCreateTaskError = () => {
+    toast.error('Erro ao adicionar tarefa, tente novamente.')
   }
 
   return (
@@ -100,7 +93,8 @@ export default function Tasks() {
 
           <AddTaskDialog
             handleClose={() => setAddTaskDialogIsOpen(false)}
-            handleAdd={handleAddTask}
+            handleCreateTaskSuccess={handleCreateTaskSuccess}
+            handleCreateTaskError={handleCreateTaskError}
             isOpen={addTaskDialogIsOpen}
           />
         </div>
@@ -113,7 +107,7 @@ export default function Tasks() {
           {morningTasks.map((task) => (
             <TaskItem
               handleCheckboxClick={handleTaskCheckboxClick}
-              onDeleteSuccess={onDeleteTaskSuccess}
+              handleDeleteTaskSuccess={handleDeleteTaskSuccess}
               key={task.id}
               task={task}
             />
@@ -126,7 +120,7 @@ export default function Tasks() {
           {afternoonTasks.map((task) => (
             <TaskItem
               handleCheckboxClick={handleTaskCheckboxClick}
-              onDeleteSuccess={onDeleteTaskSuccess}
+              handleDeleteTaskSuccess={handleDeleteTaskSuccess}
               key={task.id}
               task={task}
             />
@@ -139,7 +133,7 @@ export default function Tasks() {
           {eveningTasks.map((task) => (
             <TaskItem
               handleCheckboxClick={handleTaskCheckboxClick}
-              onDeleteSuccess={onDeleteTaskSuccess}
+              handleDeleteTaskSuccess={handleDeleteTaskSuccess}
               key={task.id}
               task={task}
             />

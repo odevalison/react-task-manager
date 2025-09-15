@@ -5,6 +5,7 @@ import { createPortal } from 'react-dom'
 import { CSSTransition } from 'react-transition-group'
 import { v4 as uuidv4 } from 'uuid'
 
+import { LoaderIcon } from '../assets/icons'
 import { Task, TaskTime } from '../types/tasks'
 import Button from './Button'
 import Input from './Input'
@@ -13,7 +14,8 @@ import TimeSelect from './TimeSelect'
 interface AddTaskDialogProps {
   isOpen: boolean
   handleClose: () => void
-  handleAdd: (task: Task) => void
+  handleCreateTaskSuccess: (task: Task) => void
+  handleCreateTaskError: () => void
 }
 
 export type Error = {
@@ -24,16 +26,19 @@ export type Error = {
 export default function AddTaskDialog({
   isOpen,
   handleClose,
-  handleAdd,
+  handleCreateTaskSuccess,
+  handleCreateTaskError,
 }: AddTaskDialogProps) {
   const [errors, setErrors] = useState<Error[]>([])
+  const [isCreatingTask, setIsCreatingTask] = useState(false)
 
   const nodeRef = useRef<HTMLDivElement>(null)
   const titleRef = useRef<HTMLInputElement>(null)
   const descriptionRef = useRef<HTMLInputElement>(null)
   const timeRef = useRef<HTMLSelectElement>(null)
 
-  const handleSaveClick = () => {
+  const handleCreateTask = async () => {
+    setIsCreatingTask(true)
     const currentErrors = [] as Error[]
 
     const title = titleRef.current?.value.trim() as string
@@ -58,20 +63,30 @@ export default function AddTaskDialog({
         message: 'O horário é obrigatório.',
       })
     }
-
     setErrors(currentErrors)
-
-    if (currentErrors.length) {
+    const hasCurrentErrors = !!currentErrors.length
+    if (hasCurrentErrors) {
+      setIsCreatingTask(false)
       return
     }
-
-    handleAdd({
+    const newTask: Task = {
       title,
       description,
       time,
       id: uuidv4(),
       status: 'not_started',
+    }
+    const response = await fetch('http://localhost:3000/tasks', {
+      method: 'POST',
+      body: JSON.stringify(newTask),
     })
+    const isNotSuccessResponse = !response.ok
+    if (isNotSuccessResponse) {
+      setIsCreatingTask(false)
+      return handleCreateTaskError()
+    }
+    handleCreateTaskSuccess(newTask)
+    setIsCreatingTask(false)
     handleClose()
   }
 
@@ -100,6 +115,7 @@ export default function AddTaskDialog({
                 <h2 className="text-xl font-semibold text-brand-dark-blue">
                   Nova Tarefa
                 </h2>
+
                 <p className="text-sm text-brand-text-gray">
                   Insira as informações abaixo
                 </p>
@@ -110,6 +126,7 @@ export default function AddTaskDialog({
                   label="Título"
                   id="title"
                   placeholder="Título da tarefa"
+                  disabled={isCreatingTask}
                   error={titleError?.message}
                   ref={titleRef}
                 />
@@ -120,6 +137,7 @@ export default function AddTaskDialog({
                   label="Descrição"
                   id="description"
                   placeholder="Descreva a tarefa"
+                  disabled={isCreatingTask}
                   error={descriptionError?.message}
                   ref={descriptionRef}
                 />
@@ -131,7 +149,15 @@ export default function AddTaskDialog({
                   >
                     Cancelar
                   </Button>
-                  <Button variant={{ size: 'large' }} onClick={handleSaveClick}>
+
+                  <Button
+                    variant={{ size: 'large' }}
+                    onClick={handleCreateTask}
+                    disabled={isCreatingTask}
+                  >
+                    {isCreatingTask && (
+                      <LoaderIcon className="animate-spin text-brand-white" />
+                    )}
                     Salvar
                   </Button>
                 </div>
