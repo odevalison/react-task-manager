@@ -1,45 +1,52 @@
 {
   "tasks": [
     {
-      "id": 1,
+      "id": "1",
       "title": "Estudar FSC",
       "description": "Estudar React com o Felipão!",
       "time": "morning",
       "status": "complete"
     },
     {
-      "id": 2,
+      "id": "2",
       "title": "Ler livro",
       "description": "Ler 10 páginas de um livro",
       "time": "morning",
       "status": "complete"
     },
     {
-      "id": 3,
+      "id": "3",
       "title": "Treinar",
       "description": "Ir para a academia",
       "time": "afternoon",
       "status": "in_progress"
     },
     {
-      "id": 4,
+      "id": "4",
       "title": "Fazer compras",
       "description": "Fazer as compras do mês",
       "time": "afternoon",
       "status": "in_progress"
     },
     {
-      "id": 5,
+      "id": "5",
       "title": "Descansar",
       "description": "Descansar",
       "time": "evening",
       "status": "not_started"
     },
     {
-      "id": 6,
+      "id": "6",
       "title": "Meditar",
       "description": "Meditar",
       "time": "evening",
+      "status": "not_started"
+    },
+    {
+      "id": "a6de5ce7-3cc1-4ea0-acd1-687d87d7879d",
+      "title": "Teste",
+      "description": "Teste",
+      "time": "morning",
       "status": "not_started"
     }
   ]

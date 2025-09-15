@@ -33,7 +33,7 @@ export default function Tasks() {
   const afternoonTasks = tasks.filter((task) => task.time === 'afternoon')
   const eveningTasks = tasks.filter((task) => task.time === 'evening')
 
-  const handleTaskCheckboxClick = (taskId: number | string) => {
+  const handleTaskCheckboxClick = (taskId: string) => {
     const newTasks: Task[] = tasks.map((task) => {
       if (task.id !== taskId) {
         return task
@@ -56,7 +56,7 @@ export default function Tasks() {
     setTasks(newTasks)
   }
 
-  const handleTaskDeleteClick = (taskId: number | string) => {
+  const handleTaskDeleteClick = (taskId: string) => {
     const tasksWithoutDeletedTask: Task[] = tasks.filter(
       (task) => task.id !== taskId
     )
@@ -65,7 +65,16 @@ export default function Tasks() {
     toast.success('Tarefa deletada com sucesso!')
   }
 
-  const handleAddTask = (newTask: Task) => {
+  const handleAddTask = async (newTask: Task) => {
+    const response = await fetch('http://localhost:3000/tasks', {
+      method: 'POST',
+      body: JSON.stringify(newTask),
+    })
+    const isNotSuccessResponse = !response.ok
+    if (isNotSuccessResponse) {
+      toast.error('Erro ao adicionar tarefa, tente novamente.')
+      return
+    }
     setTasks((prevTasks) => [...prevTasks, newTask])
     toast.success('Tarefa adicionada com sucesso!')
   }

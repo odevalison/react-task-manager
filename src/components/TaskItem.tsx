@@ -4,8 +4,8 @@ import Button from './Button'
 
 interface TaskItemProps {
   task: Task
-  handleCheckboxClick: (taskId: number | string) => void
-  handleDeleteClick: (taskId: number | string) => void
+  handleCheckboxClick: (taskId: string) => void
+  handleDeleteClick: (taskId: string) => void
 }
 
 export default function TaskItem({
