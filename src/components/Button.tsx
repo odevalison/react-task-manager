@@ -8,6 +8,7 @@ const button = tv({
       primary: 'bg-brand-primary text-white',
       ghost: 'bg-transparent text-brand-dark-gray',
       secondary: 'bg-brand-light-gray text-brand-dark-blue',
+      danger: 'bg-brand-danger text-brand-white',
     },
     size: {
       small: 'py-1 text-xs',
@@ -22,18 +23,20 @@ const button = tv({
 
 type ButtonVariants = VariantProps<typeof button>
 
-interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+type ButtonProps = {
   children: React.ReactNode
-  variant?: ButtonVariants
-}
+} & ButtonHTMLAttributes<HTMLButtonElement> &
+  ButtonVariants
 
-export default function Button({ children, variant, ...props }: ButtonProps) {
+const Button = ({ children, color, size, ...props }: ButtonProps) => {
   return (
     <button
       {...props}
-      className={button({ ...variant, className: props.className })}
+      className={button({ color, size, className: props.className })}
     >
       {children}
     </button>
   )
 }
+
+export default Button

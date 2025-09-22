@@ -16,21 +16,16 @@ const sidebarButton = tv({
 
 type SidebarButtonVariants = VariantProps<typeof sidebarButton>
 
-interface SidebarButtonProps extends AnchorHTMLAttributes<HTMLAnchorElement> {
-  variant?: SidebarButtonVariants
-}
+type SidebarButtonProps = AnchorHTMLAttributes<HTMLAnchorElement> &
+  SidebarButtonVariants
 
-export default function SidebarButton({
-  children,
-  variant,
-  ...props
-}: SidebarButtonProps) {
+const SidebarButton = ({ children, color, ...props }: SidebarButtonProps) => {
   return (
     <a
       {...props}
       href="#"
       className={sidebarButton({
-        color: variant?.color,
+        color,
         className: props.className,
       })}
     >
@@ -38,3 +33,5 @@ export default function SidebarButton({
     </a>
   )
 }
+
+export default SidebarButton

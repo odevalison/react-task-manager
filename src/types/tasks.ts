@@ -1,10 +1,15 @@
 export type TaskStatus = 'complete' | 'in_progress' | 'not_started'
-export type TaskTime = 'morning' | 'afternoon' | 'evening'
 
-export interface Task {
+export enum TaskTime {
+  morning = 'Manhã',
+  afternoon = 'Tarde',
+  evening = 'Noite',
+}
+
+export type Task = {
   id: string
   title: string
   description: string
-  time: TaskTime
+  time: keyof typeof TaskTime
   status: TaskStatus
 }

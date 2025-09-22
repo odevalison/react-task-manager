@@ -3,10 +3,10 @@ import { forwardRef, InputHTMLAttributes } from 'react'
 import InputError from './InputError'
 import InputLabel from './InputLabel'
 
-interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
+type InputProps = {
   label: string
   error?: string
-}
+} & InputHTMLAttributes<HTMLInputElement>
 
 const Input = forwardRef<HTMLInputElement, InputProps>(
   ({ label, error = '', id, ...props }, ref) => (

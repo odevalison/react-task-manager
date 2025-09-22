@@ -71,11 +71,7 @@ export default function TaskItem({
       </div>
 
       <div className="flex items-center gap-2">
-        <Button
-          variant={{ color: 'ghost' }}
-          onClick={handleDelete}
-          disabled={isBeingDeleted}
-        >
+        <Button color="ghost" onClick={handleDelete} disabled={isBeingDeleted}>
           {isBeingDeleted ? (
             <LoaderIcon className="animate-spin text-brand-text-gray" />
           ) : (

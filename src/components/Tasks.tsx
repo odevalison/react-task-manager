@@ -80,7 +80,7 @@ export default function Tasks() {
         </div>
 
         <div className="flex items-center gap-2.5">
-          <Button variant={{ color: 'ghost', size: 'small' }}>
+          <Button color="ghost" size="small">
             Limpar tarefas <TrashIcon />
           </Button>
 

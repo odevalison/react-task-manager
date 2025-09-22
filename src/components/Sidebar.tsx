@@ -22,7 +22,7 @@ export default function Sidebar() {
           Início
         </SidebarButton>
 
-        <SidebarButton variant={{ color: 'selected' }}>
+        <SidebarButton color="selected">
           <TasksIcon />
           Minhas tarefas
         </SidebarButton>
