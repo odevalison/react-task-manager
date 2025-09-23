@@ -132,9 +132,7 @@ const TaskDetailsPage = () => {
               {...register('title', {
                 required: 'O título é obrigatório',
                 validate: (value) => {
-                  if (!value.trim()) {
-                    return 'O título não pode ser vazio.'
-                  }
+                  return !value.trim() ? 'O título não pode ser vazio.' : true
                 },
               })}
               error={errors.title?.message}
@@ -145,9 +143,7 @@ const TaskDetailsPage = () => {
               {...register('time', {
                 required: 'O horário é obrigatório',
                 validate: (value) => {
-                  if (!value.trim()) {
-                    return 'O horário não pode ser vazio.'
-                  }
+                  return !value.trim() ? 'O horário não pode ser vazio.' : true
                 },
               })}
               error={errors.time?.message}
@@ -157,9 +153,9 @@ const TaskDetailsPage = () => {
               {...register('description', {
                 required: 'A descrição é obrigatória',
                 validate: (value) => {
-                  if (!value.trim()) {
-                    return 'A descrição não pode ser vazia.'
-                  }
+                  return !value.trim()
+                    ? 'A descrição não pode ser vazia.'
+                    : true
                 },
               })}
               error={errors.description?.message}

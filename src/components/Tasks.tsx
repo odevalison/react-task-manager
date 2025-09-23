@@ -14,9 +14,9 @@ import Button from './Button'
 import TaskItem from './TaskItem'
 import TasksSeparator from './TasksSeparator'
 
-export default function Tasks() {
+const Tasks = () => {
   const [tasks, setTasks] = useState<Task[]>([])
-  const [addTaskDialogIsOpen, setAddTaskDialogIsOpen] = useState<boolean>(false)
+  const [addTaskDialogIsOpen, setAddTaskDialogIsOpen] = useState(false)
 
   useEffect(() => {
     const loadTasks = async () => {
@@ -26,6 +26,7 @@ export default function Tasks() {
       const tasks: Task[] = await response.json()
       setTasks(tasks)
     }
+
     loadTasks()
   }, [])
 
@@ -59,12 +60,12 @@ export default function Tasks() {
     toast.success('Tarefa deletada com sucesso!')
   }
 
-  const handleCreateTaskSuccess = async (newTask: Task) => {
+  const handleAddTaskSuccess = async (newTask: Task) => {
     setTasks((prevTasks) => [...prevTasks, newTask])
     toast.success('Tarefa adicionada com sucesso!')
   }
 
-  const handleCreateTaskError = () => {
+  const handleAddTaskError = () => {
     toast.error('Erro ao adicionar tarefa, tente novamente.')
   }
 
@@ -90,8 +91,8 @@ export default function Tasks() {
 
           <AddTaskDialog
             handleClose={() => setAddTaskDialogIsOpen(false)}
-            handleCreateTaskSuccess={handleCreateTaskSuccess}
-            handleCreateTaskError={handleCreateTaskError}
+            handleAddTaskSuccess={handleAddTaskSuccess}
+            handleAddTaskError={handleAddTaskError}
             isOpen={addTaskDialogIsOpen}
           />
         </div>
@@ -152,3 +153,5 @@ export default function Tasks() {
     </main>
   )
 }
+
+export default Tasks
