@@ -43,7 +43,7 @@ export default function AddTaskDialog({
 
     const title = titleRef.current?.value.trim() as string
     const description = descriptionRef.current?.value.trim() as string
-    const time = timeRef.current?.value.trim() as TaskTime
+    const time = timeRef.current?.value.trim() as keyof typeof TaskTime
 
     if (!title) {
       currentErrors.push({

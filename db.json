@@ -9,8 +9,8 @@
     },
     {
       "id": "60507adf-962b-4a47-b8ad-f488ce103bda",
-      "title": "Ler Livro",
-      "description": "Ler livro \"Como tomar boas notas\"",
+      "title": "Editando tarefa agora",
+      "description": "Estudar React.js de manhã",
       "time": "morning",
       "status": "not_started"
     },
