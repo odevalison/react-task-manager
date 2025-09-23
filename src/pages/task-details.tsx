@@ -1,4 +1,5 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
+import { useForm } from 'react-hook-form'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { toast } from 'sonner'
 
@@ -8,118 +9,78 @@ import {
   LoaderIcon,
   TrashIcon,
 } from '../assets/icons'
-import type { Error } from '../components/AddTaskDialog'
 import Button from '../components/Button'
 import Input from '../components/Input'
 import Sidebar from '../components/Sidebar'
 import TimeSelect from '../components/TimeSelect'
 import { type Task, TaskTime } from '../types/tasks'
 
+type EditTaskFormData = {
+  title: string
+  time: keyof typeof TaskTime
+  description: string
+}
+
 const TaskDetailsPage = () => {
   const navigate = useNavigate()
   const { taskId } = useParams()
-
-  const [task, setTask] = useState<Task>({} as Task)
-  const [errors, setErrors] = useState<Error[]>([])
-  const [isEditingTask, setIsEditingTask] = useState<boolean>(false)
-  const [isDeletingTask, setIsDeletingTask] = useState<boolean>(false)
-
-  const titleRef = useRef<HTMLInputElement>(null)
-  const timeRef = useRef<HTMLSelectElement>(null)
-  const descriptionRef = useRef<HTMLInputElement>(null)
+  const [task, setTask] = useState<Task>()
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors, isSubmitting, isDirty },
+  } = useForm<EditTaskFormData>()
 
   useEffect(() => {
     const fetchTaskData = async () => {
       const response = await fetch(`http://localhost:3000/tasks/${taskId}`, {
         method: 'GET',
       })
-      const isNotSuccessResponse = !response.ok
-      if (isNotSuccessResponse) {
-        return navigate('/')
-      }
-      const taskData = await response.json()
-      setTask(taskData)
+      const data: Task = await response.json()
+      setTask(data)
+      reset(data)
     }
+
     fetchTaskData()
-  }, [taskId, navigate])
+  }, [taskId, reset])
 
   const handleBackClick = () => {
     navigate(-1)
   }
 
-  const handleTaskEdit = async () => {
-    setIsEditingTask(true)
-    const currentErrors = [] as Error[]
-
-    const title = titleRef.current?.value.trim() as string
-    const time = timeRef.current?.value.trim() as keyof typeof TaskTime
-    const description = descriptionRef.current?.value.trim() as string
-
-    if (!title) {
-      currentErrors.push({
-        field: 'title',
-        message: 'O título é obrigatório.',
-      })
-    }
-    if (!time) {
-      currentErrors.push({
-        field: 'time',
-        message: 'O horário é obrigatório.',
-      })
-    }
-    if (!description) {
-      currentErrors.push({
-        field: 'description',
-        message: 'A descrição é obrigatória',
-      })
-    }
-
-    setErrors(currentErrors)
-    const hasCurrentErrors = !!currentErrors.length
-    if (hasCurrentErrors) {
-      return setIsEditingTask(false)
-    }
-
-    const newTaskValues = { title, description, time }
-    const response = await fetch(`http://localhost:3000/tasks/${task.id}`, {
+  const handleTaskEdit = async (data: EditTaskFormData) => {
+    const response = await fetch(`http://localhost:3000/tasks/${task?.id}`, {
       method: 'PATCH',
-      body: JSON.stringify(newTaskValues),
+      body: JSON.stringify({
+        title: data.title.trim(),
+        description: data.description.trim(),
+        time: data.time,
+      }),
     })
 
-    const isNotSuccessResponse = !response.ok
-    if (isNotSuccessResponse) {
-      toast.error('Ocorreu um erro ao editar a tarefa, tente novamente')
-      return setIsEditingTask(false)
+    if (!response.ok) {
+      return toast.error('Ocorreu um erro ao editar a tarefa')
     }
 
+    const taskData: Task = await response.json()
+    setTask(taskData)
+    reset(taskData)
     toast.success('Tarefa editada com sucesso!')
-    const newTaskData = await response.json()
-    setTask(newTaskData)
-    setIsEditingTask(false)
   }
 
   const handleTaskDelete = async () => {
-    setIsDeletingTask(true)
-    const response = await fetch(`http://localhost:3000/tasks/${task.id}`, {
+    const response = await fetch(`http://localhost:3000/tasks/${task?.id}`, {
       method: 'DELETE',
     })
 
-    const taskNotSuccessfullyDeleted = !response.ok
-    if (taskNotSuccessfullyDeleted) {
-      setIsDeletingTask(false)
+    if (!response.ok) {
       return toast.error('Ocorreu um erro ao deletar a tarefa')
     }
 
     toast.success('Tarefa deletada com sucesso!')
-    setIsDeletingTask(false)
     navigate('/')
   }
-
-  const titleError = errors.find((error) => error.field === 'title') as Error
-  const timeError = errors.find((error) => error.field === 'time') as Error
-  const descriptionError = errors.find(
-    (error) => error.field === 'description'
-  ) as Error
 
   return (
     <div className="flex">
@@ -146,60 +107,76 @@ const TaskDetailsPage = () => {
               <ChevronRightIcon className="text-brand-text-gray" />
 
               <span className="font-semibold text-brand-primary">
-                {task.title}
+                {task?.title}
               </span>
             </div>
 
             <h1 className="mt-1.5 text-xl font-semibold text-brand-dark-blue">
-              {task.title}
+              {task?.title}
             </h1>
           </div>
 
-          <Button
-            color="danger"
-            disabled={isDeletingTask}
-            onClick={handleTaskDelete}
-          >
-            {!isDeletingTask && <TrashIcon />}
-            {isDeletingTask && <LoaderIcon />}
+          <Button color="danger" onClick={handleTaskDelete}>
+            <TrashIcon />
             Deletar tarefa
           </Button>
         </div>
 
-        <div className="space-y-6 rounded-xl bg-brand-white p-6">
-          <Input
-            label="Título"
-            defaultValue={task.title}
-            ref={titleRef}
-            disabled={isEditingTask}
-            error={titleError?.message}
-          />
-
-          <TimeSelect
-            defaultValue={TaskTime[task.time]}
-            ref={timeRef}
-            disabled={isEditingTask}
-            error={timeError?.message}
-          />
-
-          <Input
-            label="Descrição"
-            defaultValue={task.description}
-            ref={descriptionRef}
-            disabled={isEditingTask}
-            error={descriptionError?.message}
-          />
-        </div>
-
-        <Button
-          className="flex items-center justify-center gap-2 justify-self-end"
-          color="primary"
-          onClick={handleTaskEdit}
-          disabled={isEditingTask}
+        <form
+          className="flex flex-col space-y-6"
+          onSubmit={handleSubmit(handleTaskEdit)}
         >
-          {isEditingTask && <LoaderIcon />}
-          Salvar
-        </Button>
+          {/* Dados da tarefa */}
+          <div className="space-y-6 rounded-xl bg-brand-white p-6">
+            <Input
+              {...register('title', {
+                required: 'O título é obrigatório',
+                validate: (value) => {
+                  if (!value.trim()) {
+                    return 'O título não pode ser vazio.'
+                  }
+                },
+              })}
+              error={errors.title?.message}
+              label="Título"
+            />
+
+            <TimeSelect
+              {...register('time', {
+                required: 'O horário é obrigatório',
+                validate: (value) => {
+                  if (!value.trim()) {
+                    return 'O horário não pode ser vazio.'
+                  }
+                },
+              })}
+              error={errors.time?.message}
+            />
+
+            <Input
+              {...register('description', {
+                required: 'A descrição é obrigatória',
+                validate: (value) => {
+                  if (!value.trim()) {
+                    return 'A descrição não pode ser vazia.'
+                  }
+                },
+              })}
+              error={errors.description?.message}
+              label="Descrição"
+            />
+          </div>
+          {/* Botão de salvar */}
+          <Button
+            type="submit"
+            className="self-end"
+            color="primary"
+            disabled={!isDirty || isSubmitting}
+          >
+            {isSubmitting && <LoaderIcon />}
+            Salvar
+          </Button>
+        </form>
       </div>
     </div>
   )

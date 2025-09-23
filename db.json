@@ -2,9 +2,9 @@
   "tasks": [
     {
       "id": "da8ccd62-3d4f-471a-8da0-ad2aa02f6776",
-      "title": "Estudar React (Task Manager)",
-      "description": "Continuar projeto React do FSC",
-      "time": "morning",
+      "title": "Ir para a academia",
+      "description": "Treino de pernas completo",
+      "time": "afternoon",
       "status": "not_started"
     },
     {
@@ -462,13 +462,6 @@
         "id": "14cd"
       },
       "id": "f7ac"
-    },
-    {
-      "id": "b07a212f-7fdf-4198-a0bf-3e06f1c5e359",
-      "title": "Nova tarefa",
-      "description": "Testando Toast nova tarefa",
-      "time": "morning",
-      "status": "not_started"
     }
   ]
 }
