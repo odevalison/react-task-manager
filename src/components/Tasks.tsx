@@ -100,7 +100,11 @@ export default function Tasks() {
       <div className="space-y-6 rounded-xl bg-white p-6">
         <div className="space-y-3">
           <TasksSeparator text="Manhã" icon={<SunIcon />} />
-
+          {!morningTasks.length && (
+            <p className="text-xs font-medium text-brand-text-gray">
+              Nenhuma tarefa cadastrada para o período da manhã
+            </p>
+          )}
           {morningTasks.map((task) => (
             <TaskItem
               handleCheckboxClick={handleTaskCheckboxClick}
@@ -113,7 +117,11 @@ export default function Tasks() {
 
         <div className="space-y-3">
           <TasksSeparator text="Tarde" icon={<CloudSunIcon />} />
-
+          {!afternoonTasks.length && (
+            <p className="text-xs font-medium text-brand-text-gray">
+              Nenhuma tarefa cadastrada para o período da tarde
+            </p>
+          )}
           {afternoonTasks.map((task) => (
             <TaskItem
               handleCheckboxClick={handleTaskCheckboxClick}
@@ -126,7 +134,11 @@ export default function Tasks() {
 
         <div className="space-y-3">
           <TasksSeparator text="Noite" icon={<MoonIcon />} />
-
+          {!eveningTasks.length && (
+            <p className="text-xs font-medium text-brand-text-gray">
+              Nenhuma tarefa cadastrada para o período da noite
+            </p>
+          )}
           {eveningTasks.map((task) => (
             <TaskItem
               handleCheckboxClick={handleTaskCheckboxClick}

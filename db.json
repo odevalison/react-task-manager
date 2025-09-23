@@ -1,13 +1,6 @@
 {
   "tasks": [
     {
-      "id": "8587a934-2c66-4d9f-a181-0116c9ddc808",
-      "title": "Orar",
-      "description": "Orar para a prova de amanhã (P.P)",
-      "time": "evening",
-      "status": "not_started"
-    },
-    {
       "id": "da8ccd62-3d4f-471a-8da0-ad2aa02f6776",
       "title": "Estudar React (Task Manager)",
       "description": "Continuar projeto React do FSC",
