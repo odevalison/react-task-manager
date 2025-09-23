@@ -8,17 +8,10 @@
       "status": "not_started"
     },
     {
-      "id": "60507adf-962b-4a47-b8ad-f488ce103bda",
-      "title": "Editando tarefa agora",
-      "description": "Estudar React.js de manhã",
-      "time": "morning",
-      "status": "not_started"
-    },
-    {
       "id": "da8ccd62-3d4f-471a-8da0-ad2aa02f6776",
-      "title": "Estudar React (FSC)",
+      "title": "Estudar React (Task Manager)",
       "description": "Continuar projeto React do FSC",
-      "time": "afternoon",
+      "time": "morning",
       "status": "not_started"
     },
     {
@@ -476,6 +469,13 @@
         "id": "14cd"
       },
       "id": "f7ac"
+    },
+    {
+      "id": "b07a212f-7fdf-4198-a0bf-3e06f1c5e359",
+      "title": "Nova tarefa",
+      "description": "Testando Toast nova tarefa",
+      "time": "morning",
+      "status": "not_started"
     }
   ]
 }

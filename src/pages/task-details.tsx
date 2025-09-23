@@ -13,7 +13,7 @@ import Button from '../components/Button'
 import Input from '../components/Input'
 import Sidebar from '../components/Sidebar'
 import TimeSelect from '../components/TimeSelect'
-import { Task, TaskTime } from '../types/tasks'
+import { type Task, TaskTime } from '../types/tasks'
 
 const TaskDetailsPage = () => {
   const navigate = useNavigate()
@@ -21,7 +21,8 @@ const TaskDetailsPage = () => {
 
   const [task, setTask] = useState<Task>({} as Task)
   const [errors, setErrors] = useState<Error[]>([])
-  const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [isEditingTask, setIsEditingTask] = useState<boolean>(false)
+  const [isDeletingTask, setIsDeletingTask] = useState<boolean>(false)
 
   const titleRef = useRef<HTMLInputElement>(null)
   const timeRef = useRef<HTMLSelectElement>(null)
@@ -47,7 +48,7 @@ const TaskDetailsPage = () => {
   }
 
   const handleTaskEdit = async () => {
-    setIsLoading(true)
+    setIsEditingTask(true)
     const currentErrors = [] as Error[]
 
     const title = titleRef.current?.value.trim() as string
@@ -76,7 +77,7 @@ const TaskDetailsPage = () => {
     setErrors(currentErrors)
     const hasCurrentErrors = !!currentErrors.length
     if (hasCurrentErrors) {
-      return setIsLoading(false)
+      return setIsEditingTask(false)
     }
 
     const newTaskValues = { title, description, time }
@@ -84,16 +85,34 @@ const TaskDetailsPage = () => {
       method: 'PATCH',
       body: JSON.stringify(newTaskValues),
     })
+
     const isNotSuccessResponse = !response.ok
     if (isNotSuccessResponse) {
       toast.error('Ocorreu um erro ao editar a tarefa, tente novamente')
-      return setIsLoading(false)
+      return setIsEditingTask(false)
     }
 
     toast.success('Tarefa editada com sucesso!')
     const newTaskData = await response.json()
     setTask(newTaskData)
-    setIsLoading(false)
+    setIsEditingTask(false)
+  }
+
+  const handleTaskDelete = async () => {
+    setIsDeletingTask(true)
+    const response = await fetch(`http://localhost:3000/tasks/${task.id}`, {
+      method: 'DELETE',
+    })
+
+    const taskNotSuccessfullyDeleted = !response.ok
+    if (taskNotSuccessfullyDeleted) {
+      setIsDeletingTask(false)
+      return toast.error('Ocorreu um erro ao deletar a tarefa')
+    }
+
+    toast.success('Tarefa deletada com sucesso!')
+    setIsDeletingTask(false)
+    navigate('/')
   }
 
   const titleError = errors.find((error) => error.field === 'title') as Error
@@ -136,8 +155,13 @@ const TaskDetailsPage = () => {
             </h1>
           </div>
 
-          <Button color="danger">
-            <TrashIcon />
+          <Button
+            color="danger"
+            disabled={isDeletingTask}
+            onClick={handleTaskDelete}
+          >
+            {!isDeletingTask && <TrashIcon />}
+            {isDeletingTask && <LoaderIcon />}
             Deletar tarefa
           </Button>
         </div>
@@ -147,14 +171,14 @@ const TaskDetailsPage = () => {
             label="Título"
             defaultValue={task.title}
             ref={titleRef}
-            disabled={isLoading}
+            disabled={isEditingTask}
             error={titleError?.message}
           />
 
           <TimeSelect
             defaultValue={TaskTime[task.time]}
             ref={timeRef}
-            disabled={isLoading}
+            disabled={isEditingTask}
             error={timeError?.message}
           />
 
@@ -162,7 +186,7 @@ const TaskDetailsPage = () => {
             label="Descrição"
             defaultValue={task.description}
             ref={descriptionRef}
-            disabled={isLoading}
+            disabled={isEditingTask}
             error={descriptionError?.message}
           />
         </div>
@@ -171,9 +195,9 @@ const TaskDetailsPage = () => {
           className="flex items-center justify-center gap-2 justify-self-end"
           color="primary"
           onClick={handleTaskEdit}
-          disabled={isLoading}
+          disabled={isEditingTask}
         >
-          {isLoading && <LoaderIcon />}
+          {isEditingTask && <LoaderIcon />}
           Salvar
         </Button>
       </div>
