@@ -14,7 +14,7 @@ import Button from './Button'
 import Input from './Input'
 import TimeSelect from './TimeSelect'
 
-type AddTaskDialogProps = {
+interface AddTaskDialogProps {
   isOpen: boolean
   handleClose: () => void
 }

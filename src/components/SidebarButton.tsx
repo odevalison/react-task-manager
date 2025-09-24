@@ -16,8 +16,9 @@ const sidebarButton = tv({
 
 type SidebarButtonVariants = VariantProps<typeof sidebarButton>
 
-type SidebarButtonProps = AnchorHTMLAttributes<HTMLAnchorElement> &
-  SidebarButtonVariants
+interface SidebarButtonProps
+  extends Omit<AnchorHTMLAttributes<HTMLAnchorElement>, 'color'>,
+    SidebarButtonVariants {}
 
 const SidebarButton = ({ children, color, ...props }: SidebarButtonProps) => {
   return (

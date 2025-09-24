@@ -6,7 +6,7 @@ import { CheckIcon, DetailsIcon, LoaderIcon, TrashIcon } from '../assets/icons'
 import { Task } from '../types/tasks'
 import Button from './Button'
 
-type TaskItemProps = {
+interface TaskItemProps {
   task: Task
   handleCheckboxClick: (taskId: string) => void
 }

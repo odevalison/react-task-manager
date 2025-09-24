@@ -23,10 +23,11 @@ const button = tv({
 
 type ButtonVariants = VariantProps<typeof button>
 
-type ButtonProps = {
+interface ButtonProps
+  extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'color'>,
+    ButtonVariants {
   children: React.ReactNode
-} & ButtonHTMLAttributes<HTMLButtonElement> &
-  ButtonVariants
+}
 
 const Button = ({ children, color, size, ...props }: ButtonProps) => {
   return (
