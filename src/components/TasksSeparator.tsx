@@ -3,7 +3,7 @@ interface TasksSeparatorProps {
   icon: React.ReactNode
 }
 
-export default function TasksSeparator({ icon, text }: TasksSeparatorProps) {
+const TasksSeparator = ({ icon, text }: TasksSeparatorProps) => {
   return (
     <div className="mb-3 flex items-center gap-1.5 border-b border-brand-border pb-1.5 text-brand-text-gray">
       {icon}
@@ -11,3 +11,5 @@ export default function TasksSeparator({ icon, text }: TasksSeparatorProps) {
     </div>
   )
 }
+
+export default TasksSeparator

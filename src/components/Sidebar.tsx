@@ -1,7 +1,7 @@
 import { HomeIcon, TasksIcon } from '../assets/icons'
 import SidebarButton from './SidebarButton'
 
-export default function Sidebar() {
+const Sidebar = () => {
   return (
     <aside className="h-dvh min-w-64 bg-white">
       <div className="space-y-4 px-8 py-6">
@@ -30,3 +30,5 @@ export default function Sidebar() {
     </aside>
   )
 }
+
+export default Sidebar
