@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useForm } from 'react-hook-form'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { toast } from 'sonner'
@@ -22,64 +22,97 @@ type EditTaskFormData = {
 }
 
 const TaskDetailsPage = () => {
-  const navigate = useNavigate()
+  const queryClient = useQueryClient()
   const { taskId } = useParams()
-  const [task, setTask] = useState<Task>()
+  const navigate = useNavigate()
+
   const {
     register,
     handleSubmit,
     reset,
-    formState: { errors, isSubmitting, isDirty },
+    formState: { errors, isDirty },
   } = useForm<EditTaskFormData>()
 
-  useEffect(() => {
-    const fetchTaskData = async () => {
+  const { data: task } = useQuery<Task>({
+    queryKey: ['task'],
+    queryFn: async () => {
       const response = await fetch(`http://localhost:3000/tasks/${taskId}`, {
         method: 'GET',
       })
-      const data: Task = await response.json()
-      setTask(data)
+      const data = await response.json()
       reset(data)
-    }
+      return data
+    },
+  })
 
-    fetchTaskData()
-  }, [taskId, reset])
+  const { mutate: editTask, isPending: isEditingTask } = useMutation({
+    mutationKey: ['edit-task', taskId],
+    mutationFn: async (data: EditTaskFormData) => {
+      const response = await fetch(`http://localhost:3000/tasks/${taskId}`, {
+        method: 'PATCH',
+        body: JSON.stringify({
+          title: data.title.trim(),
+          description: data.description.trim(),
+          time: data.time,
+        }),
+      })
+      if (!response.ok) {
+        throw new Error('Erro ao editar tarefa')
+      }
+      const updatedTask = await response.json()
+      queryClient.setQueryData<Task[]>(['tasks'], (oldTasks) => {
+        return oldTasks?.map((oldTask) =>
+          oldTask.id === taskId ? updatedTask : oldTask
+        )
+      })
+    },
+  })
+
+  const { mutate: deleteTask, isPending: isDeletingTask } = useMutation({
+    mutationKey: ['delete-task', taskId],
+    mutationFn: async () => {
+      const response = await fetch(`http://localhost:3000/tasks/${taskId}`, {
+        method: 'DELETE',
+      })
+      if (!response.ok) {
+        throw new Error('Erro ao deletar tarefa!')
+      }
+      const deletedTask: Task = await response.json()
+      queryClient.setQueryData<Task[]>(['tasks'], (oldTasks) => {
+        return oldTasks?.filter((oldTask) => oldTask.id !== deletedTask.id)
+      })
+    },
+  })
 
   const handleBackClick = () => {
     navigate(-1)
   }
 
   const handleTaskEdit = async (data: EditTaskFormData) => {
-    const response = await fetch(`http://localhost:3000/tasks/${task?.id}`, {
-      method: 'PATCH',
-      body: JSON.stringify({
-        title: data.title.trim(),
-        description: data.description.trim(),
-        time: data.time,
-      }),
+    editTask(data, {
+      onSuccess: () => {
+        queryClient.setQueryData(['task'], () => {
+          return data
+        })
+        reset(data)
+        toast.success('Tarefa editada com sucesso!')
+      },
+      onError: (error) => {
+        toast.error(error.message)
+      },
     })
-
-    if (!response.ok) {
-      return toast.error('Ocorreu um erro ao editar a tarefa')
-    }
-
-    const taskData: Task = await response.json()
-    setTask(taskData)
-    reset(taskData)
-    toast.success('Tarefa editada com sucesso!')
   }
 
   const handleTaskDelete = async () => {
-    const response = await fetch(`http://localhost:3000/tasks/${task?.id}`, {
-      method: 'DELETE',
+    deleteTask(undefined, {
+      onSuccess: () => {
+        toast.success('Tarefa deletada com sucesso!')
+        navigate('/')
+      },
+      onError: (error) => {
+        toast.error(error.message)
+      },
     })
-
-    if (!response.ok) {
-      return toast.error('Ocorreu um erro ao deletar a tarefa')
-    }
-
-    toast.success('Tarefa deletada com sucesso!')
-    navigate('/')
   }
 
   return (
@@ -116,8 +149,16 @@ const TaskDetailsPage = () => {
             </h1>
           </div>
 
-          <Button color="danger" onClick={handleTaskDelete}>
-            <TrashIcon />
+          <Button
+            color="danger"
+            disabled={isDeletingTask || isEditingTask}
+            onClick={handleTaskDelete}
+          >
+            {isDeletingTask ? (
+              <LoaderIcon className="animate-spin" />
+            ) : (
+              <TrashIcon />
+            )}
             Deletar tarefa
           </Button>
         </div>
@@ -162,14 +203,14 @@ const TaskDetailsPage = () => {
               label="Descrição"
             />
           </div>
-          {/* Botão de salvar */}
+
           <Button
             type="submit"
             className="self-end"
             color="primary"
-            disabled={!isDirty || isSubmitting}
+            disabled={!isDirty || isEditingTask || isDeletingTask}
           >
-            {isSubmitting && <LoaderIcon />}
+            {isEditingTask && <LoaderIcon className="animate-spin" />}
             Salvar
           </Button>
         </form>

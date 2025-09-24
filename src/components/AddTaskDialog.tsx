@@ -1,9 +1,11 @@
 import './AddTaskDialog.css'
 
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useRef } from 'react'
 import { createPortal } from 'react-dom'
 import { useForm } from 'react-hook-form'
 import { CSSTransition } from 'react-transition-group'
+import { toast } from 'sonner'
 import { v4 as uuidv4 } from 'uuid'
 
 import { LoaderIcon } from '../assets/icons'
@@ -15,8 +17,6 @@ import TimeSelect from './TimeSelect'
 type AddTaskDialogProps = {
   isOpen: boolean
   handleClose: () => void
-  handleAddTaskSuccess: (task: Task) => void
-  handleAddTaskError: () => void
 }
 
 type AddTaskDialogFormData = {
@@ -25,12 +25,23 @@ type AddTaskDialogFormData = {
   description: string
 }
 
-const AddTaskDialog = ({
-  isOpen,
-  handleClose,
-  handleAddTaskSuccess,
-  handleAddTaskError,
-}: AddTaskDialogProps) => {
+const AddTaskDialog = ({ isOpen, handleClose }: AddTaskDialogProps) => {
+  const queryClient = useQueryClient()
+
+  const { mutate } = useMutation({
+    mutationKey: ['add-task'],
+    mutationFn: async (task: Task) => {
+      const response = await fetch('http://localhost:3000/tasks', {
+        method: 'POST',
+        body: JSON.stringify(task),
+      })
+      if (!response.ok) {
+        throw new Error('Erro ao adicionar tarefa')
+      }
+      return await response.json()
+    },
+  })
+
   const {
     register,
     handleSubmit,
@@ -51,17 +62,19 @@ const AddTaskDialog = ({
       status: 'not_started',
     }
 
-    const response = await fetch('http://localhost:3000/tasks', {
-      method: 'POST',
-      body: JSON.stringify(newTask),
+    mutate(newTask, {
+      onSuccess: () => {
+        queryClient.setQueryData<Task[]>(['tasks'], (oldTasks) => {
+          return oldTasks ? [...oldTasks, newTask] : oldTasks
+        })
+        handleClose()
+        reset({ description: '', time: 'morning', title: '' })
+        toast.success('Tarefa adicionada com sucesso!')
+      },
+      onError: (error) => {
+        toast.error(error.message)
+      },
     })
-    if (!response.ok) {
-      return handleAddTaskError()
-    }
-
-    handleAddTaskSuccess(newTask)
-    handleClose()
-    reset({ description: '', time: 'morning', title: '' })
   }
 
   const handleCancelClick = () => {

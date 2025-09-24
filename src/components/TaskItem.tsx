@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { Link } from 'react-router-dom'
 import { toast } from 'sonner'
 
@@ -6,43 +6,46 @@ import { CheckIcon, DetailsIcon, LoaderIcon, TrashIcon } from '../assets/icons'
 import { Task } from '../types/tasks'
 import Button from './Button'
 
-interface TaskItemProps {
+type TaskItemProps = {
   task: Task
-  handleDeleteTaskSuccess: (taskId: string) => void
   handleCheckboxClick: (taskId: string) => void
 }
 
-export default function TaskItem({
-  task,
-  handleCheckboxClick,
-  handleDeleteTaskSuccess,
-}: TaskItemProps) {
-  const [isBeingDeleted, setIsBeingDeleted] = useState<boolean>(false)
+const TaskItem = ({ task, handleCheckboxClick }: TaskItemProps) => {
+  const queryClient = useQueryClient()
+
+  const { mutate, isPending } = useMutation({
+    mutationKey: ['delete-task', task.id],
+    mutationFn: async () => {
+      const response = await fetch(`http://localhost:3000/tasks/${task.id}`, {
+        method: 'DELETE',
+      })
+      return await response.json()
+    },
+  })
 
   const handleDelete = async () => {
-    setIsBeingDeleted(true)
-
-    const response = await fetch(`http://localhost:3000/tasks/${task.id}`, {
-      method: 'DELETE',
+    mutate(undefined, {
+      onSuccess: () => {
+        queryClient.setQueryData<Task[]>(['tasks'], (oldTasks) => {
+          return oldTasks?.filter((oldTask) => oldTask.id !== task.id)
+        })
+        toast.success('Tarefa deletada com sucesso!')
+      },
+      onError: () => {
+        toast.error('Erro ao deletar tarefa')
+      },
     })
-
-    const isNotSuccessResponse = !response.ok
-    if (isNotSuccessResponse) {
-      setIsBeingDeleted(false)
-      toast.error('Erro ao excluir a tarefa, tente novamente.')
-      return
-    }
-
-    handleDeleteTaskSuccess(task.id)
-    setIsBeingDeleted(false)
   }
 
   const getClassesByStatus = () => {
     if (task.status === 'complete') {
       return 'bg-brand-primary text-sm font-medium text-brand-primary'
-    } else if (task.status === 'not_started') {
+    }
+    if (task.status === 'not_started') {
       return 'bg-brand-dark-blue text-sm bg-opacity-10 font-medium text-brand-dark-gray'
-    } else if (task.status === 'in_progress') {
+    }
+    if (task.status === 'in_progress') {
       return 'bg-brand-process text-sm font-medium text-brand-process'
     }
   }
@@ -71,8 +74,8 @@ export default function TaskItem({
       </div>
 
       <div className="flex items-center gap-2">
-        <Button color="ghost" onClick={handleDelete} disabled={isBeingDeleted}>
-          {isBeingDeleted ? (
+        <Button color="ghost" onClick={handleDelete} disabled={isPending}>
+          {isPending ? (
             <LoaderIcon className="animate-spin text-brand-text-gray" />
           ) : (
             <TrashIcon className="text-brand-text-gray" />
@@ -86,3 +89,5 @@ export default function TaskItem({
     </div>
   )
 }
+
+export default TaskItem
