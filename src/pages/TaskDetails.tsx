@@ -1,4 +1,3 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useForm } from 'react-hook-form'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { toast } from 'sonner'
@@ -13,16 +12,18 @@ import Button from '../components/Button'
 import Input from '../components/Input'
 import Sidebar from '../components/Sidebar'
 import TimeSelect from '../components/TimeSelect'
-import { type Task, TaskTime } from '../types/tasks'
+import { useDeleteTask } from '../hooks/data/use-delete-task'
+import { useGetTask } from '../hooks/data/use-get-task'
+import { useUpdateTask } from '../hooks/data/use-update-task'
+import { TaskTime } from '../types/tasks'
 
-type EditTaskFormData = {
+export type EditTaskFormData = {
   title: string
   time: keyof typeof TaskTime
   description: string
 }
 
 const TaskDetailsPage = () => {
-  const queryClient = useQueryClient()
   const { taskId } = useParams()
   const navigate = useNavigate()
 
@@ -33,67 +34,24 @@ const TaskDetailsPage = () => {
     formState: { errors, isDirty },
   } = useForm<EditTaskFormData>()
 
-  const { data: task } = useQuery<Task>({
-    queryKey: ['task'],
-    queryFn: async () => {
-      const response = await fetch(`http://localhost:3000/tasks/${taskId}`, {
-        method: 'GET',
-      })
-      const data = await response.json()
-      reset(data)
-      return data
-    },
+  const { data: task } = useGetTask({
+    taskId,
+    onSuccess: (task) => reset(task),
   })
-
-  const { mutate: editTask, isPending: isEditingTask } = useMutation({
-    mutationKey: ['edit-task', taskId],
-    mutationFn: async (data: EditTaskFormData) => {
-      const response = await fetch(`http://localhost:3000/tasks/${taskId}`, {
-        method: 'PATCH',
-        body: JSON.stringify({
-          title: data.title.trim(),
-          description: data.description.trim(),
-          time: data.time,
-        }),
-      })
-      if (!response.ok) {
-        throw new Error('Erro ao editar tarefa')
-      }
-      const updatedTask = await response.json()
-      queryClient.setQueryData<Task[]>(['tasks'], (oldTasks) => {
-        return oldTasks?.map((oldTask) =>
-          oldTask.id === taskId ? updatedTask : oldTask
-        )
-      })
-    },
-  })
-
-  const { mutate: deleteTask, isPending: isDeletingTask } = useMutation({
-    mutationKey: ['delete-task', taskId],
-    mutationFn: async () => {
-      const response = await fetch(`http://localhost:3000/tasks/${taskId}`, {
-        method: 'DELETE',
-      })
-      if (!response.ok) {
-        throw new Error('Erro ao deletar tarefa!')
-      }
-      const deletedTask: Task = await response.json()
-      queryClient.setQueryData<Task[]>(['tasks'], (oldTasks) => {
-        return oldTasks?.filter((oldTask) => oldTask.id !== deletedTask.id)
-      })
-    },
-  })
+  const { mutate: updateTask, isPending: isEditingTask } = useUpdateTask(
+    taskId!
+  )
+  const { mutate: deleteTask, isPending: isDeletingTask } = useDeleteTask(
+    taskId!
+  )
 
   const handleBackClick = () => {
     navigate(-1)
   }
 
   const handleTaskEdit = async (data: EditTaskFormData) => {
-    editTask(data, {
+    updateTask(data, {
       onSuccess: () => {
-        queryClient.setQueryData(['task'], () => {
-          return data
-        })
         reset(data)
         toast.success('Tarefa editada com sucesso!')
       },

@@ -11,6 +11,9 @@ export const useDeleteTask = (taskId: string) => {
       const response = await fetch(`http://localhost:3000/tasks/${taskId}`, {
         method: 'DELETE',
       })
+      if (!response.ok) {
+        throw new Error('Erro ao deletar tarefa!')
+      }
       const deletedTask: Task = await response.json()
       return deletedTask
     },
