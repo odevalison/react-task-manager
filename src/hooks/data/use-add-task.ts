@@ -1,4 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
+import axios from 'axios'
 
 import type { Task } from '../../types/tasks'
 
@@ -8,14 +9,10 @@ export const useAddTask = () => {
   return useMutation({
     mutationKey: ['add-task'],
     mutationFn: async (task: Task) => {
-      const response = await fetch('http://localhost:3000/tasks', {
-        method: 'POST',
-        body: JSON.stringify(task),
-      })
-      if (!response.ok) {
-        throw new Error('Erro ao adicionar tarefa')
-      }
-      const createdTask: Task = await response.json()
+      const { data: createdTask } = await axios.post<Task>(
+        'http://localhost:3000/tasks',
+        task
+      )
       return createdTask
     },
     onSuccess: (createdTask) => {

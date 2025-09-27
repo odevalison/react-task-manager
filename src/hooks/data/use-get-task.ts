@@ -1,4 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
+import axios from 'axios'
 
 import type { Task } from '../../types/tasks'
 
@@ -11,10 +12,9 @@ export const useGetTask = ({ onSuccess, taskId }: UseGetTaskProps) => {
   return useQuery<Task>({
     queryKey: ['task'],
     queryFn: async () => {
-      const response = await fetch(`http://localhost:3000/tasks/${taskId}`, {
-        method: 'GET',
-      })
-      const task: Task = await response.json()
+      const { data: task } = await axios.get(
+        `http://localhost:3000/tasks/${taskId}`
+      )
       onSuccess(task)
       return task
     },

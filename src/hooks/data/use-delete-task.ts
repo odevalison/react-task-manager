@@ -1,4 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
+import axios from 'axios'
 
 import type { Task } from '../../types/tasks'
 
@@ -8,13 +9,9 @@ export const useDeleteTask = (taskId: string) => {
   return useMutation({
     mutationKey: ['delete-task', taskId],
     mutationFn: async () => {
-      const response = await fetch(`http://localhost:3000/tasks/${taskId}`, {
-        method: 'DELETE',
-      })
-      if (!response.ok) {
-        throw new Error('Erro ao deletar tarefa!')
-      }
-      const deletedTask: Task = await response.json()
+      const { data: deletedTask } = await axios.delete<Task>(
+        `http://localhost:3000/tasks/${taskId}`
+      )
       return deletedTask
     },
     onSuccess: ({ id: deletedTaskId }) => {
