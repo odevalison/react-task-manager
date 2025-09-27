@@ -1,4 +1,5 @@
-import { AnchorHTMLAttributes } from 'react'
+import { ComponentProps } from 'react'
+import { NavLink } from 'react-router-dom'
 import { tv, VariantProps } from 'tailwind-variants'
 
 const sidebarButton = tv({
@@ -17,26 +18,27 @@ const sidebarButton = tv({
 type SidebarButtonVariants = VariantProps<typeof sidebarButton>
 
 interface SidebarButtonProps
-  extends Omit<AnchorHTMLAttributes<HTMLAnchorElement>, 'color'>,
+  extends Omit<ComponentProps<'a'>, 'color'>,
     SidebarButtonVariants {}
 
 const SidebarButton = ({
   children,
-  color,
-  href,
+  href: to,
   ...props
 }: SidebarButtonProps) => {
   return (
-    <a
+    <NavLink
       {...props}
-      href={href}
-      className={sidebarButton({
-        color,
-        className: props.className,
-      })}
+      to={to!}
+      className={({ isActive }) =>
+        sidebarButton({
+          color: isActive ? 'selected' : 'unselected',
+          className: props.className,
+        })
+      }
     >
       {children}
-    </a>
+    </NavLink>
   )
 }
 
