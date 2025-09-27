@@ -167,7 +167,6 @@ const TaskDetailsPage = () => {
           className="flex flex-col space-y-6"
           onSubmit={handleSubmit(handleTaskEdit)}
         >
-          {/* Dados da tarefa */}
           <div className="space-y-6 rounded-xl bg-brand-white p-6">
             <Input
               {...register('title', {

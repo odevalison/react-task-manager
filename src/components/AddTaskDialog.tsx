@@ -1,6 +1,5 @@
 import './AddTaskDialog.css'
 
-import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useRef } from 'react'
 import { createPortal } from 'react-dom'
 import { useForm } from 'react-hook-form'
@@ -9,6 +8,7 @@ import { toast } from 'sonner'
 import { v4 as uuidv4 } from 'uuid'
 
 import { LoaderIcon } from '../assets/icons'
+import { useAddTask } from '../hooks/data/use-add-task'
 import { Task, TaskTime } from '../types/tasks'
 import Button from './Button'
 import Input from './Input'
@@ -26,22 +26,7 @@ type AddTaskDialogFormData = {
 }
 
 const AddTaskDialog = ({ isOpen, handleClose }: AddTaskDialogProps) => {
-  const queryClient = useQueryClient()
-
-  const { mutate } = useMutation({
-    mutationKey: ['add-task'],
-    mutationFn: async (task: Task) => {
-      const response = await fetch('http://localhost:3000/tasks', {
-        method: 'POST',
-        body: JSON.stringify(task),
-      })
-      if (!response.ok) {
-        throw new Error('Erro ao adicionar tarefa')
-      }
-      return await response.json()
-    },
-  })
-
+  const { mutate: addTask } = useAddTask()
   const {
     register,
     handleSubmit,
@@ -50,7 +35,6 @@ const AddTaskDialog = ({ isOpen, handleClose }: AddTaskDialogProps) => {
   } = useForm<AddTaskDialogFormData>({
     defaultValues: { description: '', time: 'morning', title: '' },
   })
-
   const nodeRef = useRef<HTMLDivElement>(null)
 
   const handleAddTask = async (data: AddTaskDialogFormData) => {
@@ -62,11 +46,8 @@ const AddTaskDialog = ({ isOpen, handleClose }: AddTaskDialogProps) => {
       status: 'not_started',
     }
 
-    mutate(newTask, {
+    addTask(newTask, {
       onSuccess: () => {
-        queryClient.setQueryData<Task[]>(['tasks'], (oldTasks) => {
-          return oldTasks ? [...oldTasks, newTask] : oldTasks
-        })
         handleClose()
         reset({ description: '', time: 'morning', title: '' })
         toast.success('Tarefa adicionada com sucesso!')
