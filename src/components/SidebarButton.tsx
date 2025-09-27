@@ -20,11 +20,16 @@ interface SidebarButtonProps
   extends Omit<AnchorHTMLAttributes<HTMLAnchorElement>, 'color'>,
     SidebarButtonVariants {}
 
-const SidebarButton = ({ children, color, ...props }: SidebarButtonProps) => {
+const SidebarButton = ({
+  children,
+  color,
+  href,
+  ...props
+}: SidebarButtonProps) => {
   return (
     <a
       {...props}
-      href="#"
+      href={href}
       className={sidebarButton({
         color,
         className: props.className,
