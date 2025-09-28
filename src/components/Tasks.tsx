@@ -24,7 +24,7 @@ const Tasks = () => {
             </p>
           )}
           {morningTasks?.map((task) => (
-            <TaskItem key={task.id} task={task} />
+            <TaskItem status={task.status} key={task.id} task={task} />
           ))}
         </div>
 
@@ -36,7 +36,7 @@ const Tasks = () => {
             </p>
           )}
           {afternoonTasks?.map((task) => (
-            <TaskItem key={task.id} task={task} />
+            <TaskItem status={task.status} key={task.id} task={task} />
           ))}
         </div>
 
@@ -48,7 +48,7 @@ const Tasks = () => {
             </p>
           )}
           {eveningTasks?.map((task) => (
-            <TaskItem key={task.id} task={task} />
+            <TaskItem status={task.status} key={task.id} task={task} />
           ))}
         </div>
       </div>

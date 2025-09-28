@@ -90,7 +90,7 @@ const TaskDetailsPage = () => {
             <div className="flex items-center gap-1 text-xs">
               <Link
                 className="cursor-pointer text-brand-text-gray transition hover:text-brand-primary"
-                to="/"
+                to="/tasks"
               >
                 Minhas tarefas
               </Link>

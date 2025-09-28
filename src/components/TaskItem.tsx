@@ -1,17 +1,34 @@
 import { Link } from 'react-router-dom'
 import { toast } from 'sonner'
+import { tv, VariantProps } from 'tailwind-variants'
 
-import { CheckIcon, DetailsIcon, LoaderIcon, TrashIcon } from '../assets/icons'
+import { DetailsIcon, LoaderIcon, TrashIcon } from '../assets/icons'
 import { useDeleteTask } from '../hooks/data/use-delete-task'
 import { useUpdateTask } from '../hooks/data/use-update-task'
 import type { Task, TaskStatus } from '../types/tasks'
 import Button from './Button'
+import TaskItemCheckbox from './TaskItemCheckbox'
 
-interface TaskItemProps {
+const taskItem = tv({
+  base: 'flex items-center justify-between rounded-lg bg-opacity-10 px-4 py-3 transition',
+  variants: {
+    status: {
+      not_started:
+        'bg-brand-dark-blue bg-opacity-5 text-sm font-medium text-brand-dark-gray',
+      in_progress: 'bg-brand-process text-sm font-medium text-brand-process',
+      complete: 'bg-brand-primary text-sm font-medium text-brand-primary',
+    },
+  },
+  defaultVariants: { status: 'not_started' },
+})
+
+type TaskItemVariants = VariantProps<typeof taskItem>
+
+interface TaskItemProps extends TaskItemVariants {
   task: Task
 }
 
-const TaskItem = ({ task }: TaskItemProps) => {
+const TaskItem = ({ task, status }: TaskItemProps) => {
   const { mutate: deleteTask, isPending } = useDeleteTask(task.id as string)
   const { mutate: updateTask } = useUpdateTask(task.id as string)
 
@@ -54,36 +71,10 @@ const TaskItem = ({ task }: TaskItemProps) => {
     )
   }
 
-  const getClassesByStatus = () => {
-    if (task.status === 'complete') {
-      return 'bg-brand-primary text-sm font-medium text-brand-primary'
-    } else if (task.status === 'not_started') {
-      return 'bg-brand-dark-blue text-sm bg-opacity-10 font-medium text-brand-dark-gray'
-    } else if (task.status === 'in_progress') {
-      return 'bg-brand-process text-sm font-medium text-brand-process'
-    }
-  }
-
   return (
-    <div
-      className={`flex items-center justify-between rounded-lg bg-opacity-10 px-4 py-3 transition ${getClassesByStatus()}`}
-    >
+    <div className={taskItem({ status })}>
       <div className="flex items-center gap-3">
-        <label
-          className={`relative flex h-7 w-7 cursor-pointer items-center justify-center rounded-lg ${getClassesByStatus()}`}
-        >
-          <input
-            type="checkbox"
-            checked={task.status === 'complete'}
-            className="absolute size-full cursor-pointer opacity-0"
-            onChange={() => handleUpdate(task)}
-          />
-          {task.status === 'complete' && <CheckIcon />}
-          {task.status === 'in_progress' && (
-            <LoaderIcon className="animate-spin text-brand-white" />
-          )}
-        </label>
-
+        <TaskItemCheckbox status={status} onChange={() => handleUpdate(task)} />
         {task.title}
       </div>
 

@@ -5,21 +5,21 @@
       "title": "Ir para a academia",
       "description": "Treino de pernas completo",
       "time": "afternoon",
-      "status": "not_started"
+      "status": "in_progress"
     },
     {
       "id": "0e59745f-8459-427b-8ad8-2542fa8d2730",
       "title": "Estudar React",
       "description": "Estudar React no FSC",
-      "time": "evening",
-      "status": "in_progress"
+      "time": "morning",
+      "status": "complete"
     },
     {
       "id": "befa79f8-8868-4937-a025-0fedd6a08497",
       "title": "Passear com os cachorros",
       "description": "Passear com os cachorros a noite",
       "time": "evening",
-      "status": "not_started"
+      "status": "in_progress"
     }
   ]
 }
