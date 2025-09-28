@@ -17,7 +17,7 @@ import { useGetTask } from '../hooks/data/use-get-task'
 import { useUpdateTask } from '../hooks/data/use-update-task'
 import { TaskTime } from '../types/tasks'
 
-export type EditTaskFormData = {
+export type UpdateTaskFormData = {
   title: string
   time: keyof typeof TaskTime
   description: string
@@ -32,7 +32,7 @@ const TaskDetailsPage = () => {
     handleSubmit,
     reset,
     formState: { errors, isDirty },
-  } = useForm<EditTaskFormData>()
+  } = useForm<UpdateTaskFormData>()
 
   const { data: task } = useGetTask({
     taskId,
@@ -49,7 +49,7 @@ const TaskDetailsPage = () => {
     navigate(-1)
   }
 
-  const handleTaskEdit = async (data: EditTaskFormData) => {
+  const handleTaskUpdate = async (data: UpdateTaskFormData) => {
     updateTask(data, {
       onSuccess: () => {
         reset(data)
@@ -123,7 +123,7 @@ const TaskDetailsPage = () => {
 
         <form
           className="flex flex-col space-y-6"
-          onSubmit={handleSubmit(handleTaskEdit)}
+          onSubmit={handleSubmit(handleTaskUpdate)}
         >
           <div className="space-y-6 rounded-xl bg-brand-white p-6">
             <Input

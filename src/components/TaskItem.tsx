@@ -3,16 +3,29 @@ import { toast } from 'sonner'
 
 import { CheckIcon, DetailsIcon, LoaderIcon, TrashIcon } from '../assets/icons'
 import { useDeleteTask } from '../hooks/data/use-delete-task'
-import { Task } from '../types/tasks'
+import { useUpdateTask } from '../hooks/data/use-update-task'
+import type { Task, TaskStatus } from '../types/tasks'
 import Button from './Button'
 
 interface TaskItemProps {
   task: Task
-  handleCheckboxClick: (taskId: string) => void
 }
 
-const TaskItem = ({ task, handleCheckboxClick }: TaskItemProps) => {
-  const { mutate: deleteTask, isPending } = useDeleteTask(task.id)
+const TaskItem = ({ task }: TaskItemProps) => {
+  const { mutate: deleteTask, isPending } = useDeleteTask(task.id as string)
+  const { mutate: updateTask } = useUpdateTask(task.id as string)
+
+  const getNewStatus = (): TaskStatus | undefined => {
+    if (task.status === 'complete') {
+      return 'not_started'
+    }
+    if (task.status === 'in_progress') {
+      return 'complete'
+    }
+    if (task.status === 'not_started') {
+      return 'in_progress'
+    }
+  }
 
   const handleDelete = async () => {
     deleteTask(undefined, {
@@ -25,14 +38,28 @@ const TaskItem = ({ task, handleCheckboxClick }: TaskItemProps) => {
     })
   }
 
+  const handleUpdate = (task: Task) => {
+    const status = getNewStatus()
+
+    updateTask(
+      { ...task, status },
+      {
+        onSuccess: () => {
+          toast.success('Status da tarefa atualizado com sucesso!')
+        },
+        onError: (error) => {
+          toast.error(error.message)
+        },
+      }
+    )
+  }
+
   const getClassesByStatus = () => {
     if (task.status === 'complete') {
       return 'bg-brand-primary text-sm font-medium text-brand-primary'
-    }
-    if (task.status === 'not_started') {
+    } else if (task.status === 'not_started') {
       return 'bg-brand-dark-blue text-sm bg-opacity-10 font-medium text-brand-dark-gray'
-    }
-    if (task.status === 'in_progress') {
+    } else if (task.status === 'in_progress') {
       return 'bg-brand-process text-sm font-medium text-brand-process'
     }
   }
@@ -49,7 +76,7 @@ const TaskItem = ({ task, handleCheckboxClick }: TaskItemProps) => {
             type="checkbox"
             checked={task.status === 'complete'}
             className="absolute size-full cursor-pointer opacity-0"
-            onChange={() => handleCheckboxClick(task.id)}
+            onChange={() => handleUpdate(task)}
           />
           {task.status === 'complete' && <CheckIcon />}
           {task.status === 'in_progress' && (
