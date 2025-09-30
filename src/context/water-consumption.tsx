@@ -9,6 +9,7 @@ interface WaterConsumptionProviderProps {
 interface WaterConsumptionContextData {
   totalConsumedInMl: number
   goalConsumptionInMl: number
+  waterConsumedPercent: number
   increaseTotalConsumedInMl: (amountInMl: number) => void
   decreaseTotalConsumedInMl: (amountInMl: number) => void
 }
@@ -22,6 +23,7 @@ const WaterConsumptionProvider = ({
 }: WaterConsumptionProviderProps) => {
   const [totalConsumedInMl, setTotalConsumedInMl] = useState<number>(0)
   const [goalConsumptionInMl, setGoalConsumptionInMl] = useState<number>(0)
+  const [waterConsumedPercent, setWaterConsumedPercent] = useState<number>(0)
 
   const { data: waterConsumption } = useGetWaterConsumption()
 
@@ -29,6 +31,11 @@ const WaterConsumptionProvider = ({
     if (waterConsumption) {
       setTotalConsumedInMl(waterConsumption.totalConsumedInMl)
       setGoalConsumptionInMl(waterConsumption.goalConsumptionInMl)
+      setWaterConsumedPercent(
+        (waterConsumption.totalConsumedInMl /
+          waterConsumption.goalConsumptionInMl) *
+          100
+      )
     }
   }, [waterConsumption])
 
@@ -46,6 +53,7 @@ const WaterConsumptionProvider = ({
       value={{
         totalConsumedInMl,
         goalConsumptionInMl,
+        waterConsumedPercent,
         increaseTotalConsumedInMl,
         decreaseTotalConsumedInMl,
       }}

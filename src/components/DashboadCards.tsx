@@ -12,11 +12,8 @@ import DashboardCard from './DashboardCard'
 
 const DashboardCards = () => {
   const { data: tasks } = useGetTasks()
-  const { totalConsumedInMl, goalConsumptionInMl } = useContext(
-    WaterConsumptionContext
-  )
+  const { waterConsumedPercent } = useContext(WaterConsumptionContext)
 
-  const waterConsumedPercent = (totalConsumedInMl / goalConsumptionInMl) * 100
   const inProgressTasks = tasks?.filter(
     (task) => task.status === 'in_progress'
   ).length
