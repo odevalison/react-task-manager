@@ -1,5 +1,6 @@
 import { CloudSunIcon, MoonIcon, SunIcon } from '../assets/icons'
 import { useGetTasks } from '../hooks/data/use-get-tasks'
+import { Task } from '../types/tasks'
 import Header from './Header'
 import TaskItem from './TaskItem'
 import TasksSeparator from './TasksSeparator'
@@ -13,7 +14,11 @@ const Tasks = () => {
 
   return (
     <main className="w-full space-y-6 px-8 py-16">
-      <Header title="Minhas Tarefas" subtitle="Minhas Tarefas" />
+      <Header
+        tasks={tasks as Task[]}
+        title="Minhas Tarefas"
+        subtitle="Minhas Tarefas"
+      />
 
       <div className="space-y-6 rounded-xl bg-white p-6">
         <div className="space-y-3">

@@ -61,8 +61,8 @@ const WaterSubgoal = ({ subgoal, status }: WaterSubgoalProps) => {
     if (status === 'completed') {
       undoWaterSubgoal({
         onSuccess: ({ amountToDecrease, subgoalStatus }) => {
-          decreaseTotalConsumedInMl(amountToDecrease)
           updateWaterSubgoalStatus({ currentStatus: subgoalStatus })
+          decreaseTotalConsumedInMl(amountToDecrease)
         },
       })
     }

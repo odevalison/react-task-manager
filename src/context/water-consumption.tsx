@@ -31,13 +31,16 @@ const WaterConsumptionProvider = ({
     if (waterConsumption) {
       setTotalConsumedInMl(waterConsumption.totalConsumedInMl)
       setGoalConsumptionInMl(waterConsumption.goalConsumptionInMl)
-      setWaterConsumedPercent(
-        (waterConsumption.totalConsumedInMl /
-          waterConsumption.goalConsumptionInMl) *
-          100
-      )
     }
   }, [waterConsumption])
+
+  useEffect(() => {
+    if (waterConsumption) {
+      setWaterConsumedPercent(
+        (totalConsumedInMl / goalConsumptionInMl) * 100 || 0
+      )
+    }
+  }, [totalConsumedInMl, goalConsumptionInMl, waterConsumption])
 
   const increaseTotalConsumedInMl = (amountInMl: number) => {
     setTotalConsumedInMl(amountInMl)

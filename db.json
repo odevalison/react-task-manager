@@ -1,31 +1,17 @@
 {
   "tasks": [
     {
-      "id": "99f3c349-d61f-42a9-bcc3-b7a6318aa6a3",
-      "title": "Implementar Consumo de água",
-      "description": "Terminar projeto",
+      "id": "d3e74e86-fc9f-4c89-bbb2-0c3114e01d31",
+      "title": "a",
+      "description": "a",
       "time": "morning",
-      "status": "complete"
-    },
-    {
-      "id": "9be93d30-05a8-4e64-97c8-d08f17763d9f",
-      "title": "Implementar \"Limpar tarefas\"",
-      "description": ".",
-      "time": "evening",
-      "status": "not_started"
-    },
-    {
-      "id": "4f7f9a66-cc21-4ea1-b51b-85cc86fec89d",
-      "title": "Implementar % de água",
-      "description": "Implementar.",
-      "time": "evening",
       "status": "complete"
     }
   ],
   "water-consumption": [
     {
       "id": "1",
-      "totalConsumedInMl": 1000,
+      "totalConsumedInMl": 500,
       "goalConsumptionInMl": 2000
     }
   ],
@@ -38,7 +24,7 @@
     {
       "id": "f2b2d3c4-5e6f-7a8b-9c0d-1e2f3a4b5c6d",
       "amountInMl": 1000,
-      "status": "completed"
+      "status": "pending"
     },
     {
       "id": "a3c3e4d5-6f7a-8b9c-0d1e-2f3a4b5c6d7e",

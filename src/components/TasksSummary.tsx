@@ -17,6 +17,11 @@ const TasksSummary = () => {
         {tasks?.map((task) => (
           <TaskItem status={task.status} task={task} key={task.id} />
         ))}
+        {!tasks?.length && (
+          <p className="text-sm font-medium text-brand-text-gray">
+            Nenhuma tarefa cadastrada no momento.
+          </p>
+        )}
       </div>
     </div>
   )

@@ -1,16 +1,20 @@
 import { useState } from 'react'
 
 import { AddIcon, TrashIcon } from '../assets/icons'
+import { useClearTasks } from '../hooks/data/use-clear-tasks'
+import { Task } from '../types/tasks'
 import AddTaskDialog from './AddTaskDialog'
 import Button from './Button'
 
 interface HeaderProps {
   title: string
+  tasks: Task[]
   subtitle: string
 }
 
-const Header = ({ subtitle, title }: HeaderProps) => {
+const Header = ({ subtitle, title, tasks }: HeaderProps) => {
   const [addTaskDialogIsOpen, setAddTaskDialogIsOpen] = useState(false)
+  const { mutate: clearTasks } = useClearTasks(tasks)
 
   return (
     <div className="flex justify-between">
@@ -22,7 +26,7 @@ const Header = ({ subtitle, title }: HeaderProps) => {
       </div>
 
       <div className="flex items-center gap-2.5">
-        <Button color="ghost" size="small">
+        <Button color="ghost" size="small" onClick={() => clearTasks()}>
           Limpar tarefas <TrashIcon />
         </Button>
 
