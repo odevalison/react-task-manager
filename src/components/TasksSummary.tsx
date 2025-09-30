@@ -5,7 +5,7 @@ const TasksSummary = () => {
   const { data: tasks } = useGetTasks()
 
   return (
-    <div className="col-span-2 space-y-6 rounded-[10px] bg-brand-white p-6">
+    <div className="col-span-2 h-fit space-y-6 rounded-[10px] bg-brand-white p-6">
       <div>
         <h3 className="text-xl font-semibold text-brand-dark-blue">Tarefas</h3>
         <span className="text-sm text-brand-text-gray">

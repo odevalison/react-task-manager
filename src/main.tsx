@@ -6,6 +6,7 @@ import ReactDOM from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { Toaster } from 'sonner'
 
+import { WaterConsumptionProvider } from './context/water-consumption.tsx'
 import HomePage from './pages/Home.tsx'
 import TaskDetailsPage from './pages/TaskDetails.tsx'
 import TasksPage from './pages/Tasks.tsx'
@@ -30,8 +31,10 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
-      <Toaster toastOptions={{ style: { color: '#35383E' } }} />
-      <RouterProvider router={router} />
+      <WaterConsumptionProvider>
+        <Toaster toastOptions={{ style: { color: '#35383E' } }} />
+        <RouterProvider router={router} />
+      </WaterConsumptionProvider>
     </QueryClientProvider>
   </React.StrictMode>
 )

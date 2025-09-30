@@ -1,25 +1,54 @@
 {
   "tasks": [
     {
-      "id": "da8ccd62-3d4f-471a-8da0-ad2aa02f6776",
-      "title": "Ir para a academia",
-      "description": "Treino de pernas completo",
-      "time": "afternoon",
-      "status": "in_progress"
-    },
-    {
-      "id": "0e59745f-8459-427b-8ad8-2542fa8d2730",
-      "title": "Estudar React",
-      "description": "Estudar React no FSC",
+      "id": "99f3c349-d61f-42a9-bcc3-b7a6318aa6a3",
+      "title": "Implementar Consumo de água",
+      "description": "Terminar projeto",
       "time": "morning",
       "status": "complete"
     },
     {
-      "id": "befa79f8-8868-4937-a025-0fedd6a08497",
-      "title": "Passear com os cachorros",
-      "description": "Passear com os cachorros a noite",
+      "id": "9be93d30-05a8-4e64-97c8-d08f17763d9f",
+      "title": "Implementar \"Limpar tarefas\"",
+      "description": ".",
       "time": "evening",
-      "status": "in_progress"
+      "status": "not_started"
+    },
+    {
+      "id": "4f7f9a66-cc21-4ea1-b51b-85cc86fec89d",
+      "title": "Implementar % de água",
+      "description": "Implementar.",
+      "time": "evening",
+      "status": "complete"
+    }
+  ],
+  "water-consumption": [
+    {
+      "id": "1",
+      "totalConsumedInMl": 0,
+      "goalConsumptionInMl": 2000
+    }
+  ],
+  "water-subgoals": [
+    {
+      "id": "e1a1c2b3-4d5e-6f7a-8b9c-0d1e2f3a4b5c",
+      "amountInMl": 500,
+      "status": "pending"
+    },
+    {
+      "id": "f2b2d3c4-5e6f-7a8b-9c0d-1e2f3a4b5c6d",
+      "amountInMl": 1000,
+      "status": "pending"
+    },
+    {
+      "id": "a3c3e4d5-6f7a-8b9c-0d1e-2f3a4b5c6d7e",
+      "amountInMl": 1500,
+      "status": "pending"
+    },
+    {
+      "id": "b4d4f5e6-7a8b-9c0d-1e2f-3a4b5c6d7e8f",
+      "amountInMl": 2000,
+      "status": "pending"
     }
   ]
 }

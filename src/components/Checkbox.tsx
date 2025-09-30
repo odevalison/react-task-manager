@@ -8,8 +8,10 @@ const checkbox = tv({
   variants: {
     status: {
       not_started: 'bg-brand-dark-blue bg-opacity-5',
+      pending: 'bg-brand-dark-blue bg-opacity-5',
       in_progress: 'bg-brand-process',
       complete: 'bg-brand-primary',
+      completed: 'bg-brand-primary',
     },
   },
   defaultVariants: { status: 'not_started' },
@@ -26,10 +28,10 @@ const Checkbox = ({ status = 'not_started', ...props }: CheckboxProps) => {
         <input
           {...props}
           type="checkbox"
-          checked={status === 'complete'}
+          checked={status === 'complete' || status === 'completed'}
           className="absolute size-full cursor-pointer opacity-0"
         />
-        {status === 'complete' && <CheckIcon />}
+        {(status === 'complete' || status === 'completed') && <CheckIcon />}
         {status === 'in_progress' && <LoaderIcon className="animate-spin" />}
       </label>
     </>

@@ -1,15 +1,22 @@
+import { useContext } from 'react'
+
 import {
   GlassWaterIcon,
   LoaderIcon,
   Tasks2Icon,
   TasksIcon,
 } from '../assets/icons'
+import { WaterConsumptionContext } from '../context/water-consumption'
 import { useGetTasks } from '../hooks/data/use-get-tasks'
 import DashboardCard from './DashboardCard'
 
 const DashboardCards = () => {
   const { data: tasks } = useGetTasks()
+  const { totalConsumedInMl, goalConsumptionInMl } = useContext(
+    WaterConsumptionContext
+  )
 
+  const waterConsumedPercent = (totalConsumedInMl / goalConsumptionInMl) * 100
   const inProgressTasks = tasks?.filter(
     (task) => task.status === 'in_progress'
   ).length
@@ -36,7 +43,7 @@ const DashboardCards = () => {
       />
       <DashboardCard
         icon={<GlassWaterIcon />}
-        mainText="50%"
+        mainText={`${waterConsumedPercent}%`}
         secondaryText="Água"
       />
     </div>

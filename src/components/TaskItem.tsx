@@ -7,7 +7,7 @@ import { useDeleteTask } from '../hooks/data/use-delete-task'
 import { useUpdateTask } from '../hooks/data/use-update-task'
 import type { Task, TaskStatus } from '../types/tasks'
 import Button from './Button'
-import TaskItemCheckbox from './TaskItemCheckbox'
+import Checkbox from './Checkbox'
 
 const taskItem = tv({
   base: 'flex items-center justify-between rounded-lg bg-opacity-10 px-4 py-3 transition',
@@ -74,7 +74,7 @@ const TaskItem = ({ task, status }: TaskItemProps) => {
   return (
     <div className={taskItem({ status })}>
       <div className="flex items-center gap-3">
-        <TaskItemCheckbox status={status} onChange={() => handleUpdate(task)} />
+        <Checkbox status={status} onChange={() => handleUpdate(task)} />
         {task.title}
       </div>
 
