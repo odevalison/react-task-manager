@@ -40,7 +40,6 @@ const WaterConsumptionProvider = ({
   }, [waterConsumption])
 
   const increaseTotalConsumedInMl = (amountInMl: number) => {
-    console.log(amountInMl)
     setTotalConsumedInMl(amountInMl)
   }
 
